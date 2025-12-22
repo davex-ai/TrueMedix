@@ -1,0 +1,46 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.DoctorProfile"
+      spacing="15"
+      style="-fx-padding: 20; -fx-background-color: white; -fx-alignment: top-center;">
+
+    <Label fx:id="nameLabel"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;" />
+
+    <ImageView fx:id="profileImage"
+               fitWidth="150"
+               preserveRatio="true"
+               style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 4);" />
+
+    <Label fx:id="specializationLabel" text="Specialization"
+           style="-fx-font-size: 16px; -fx-text-fill: #333;" />
+
+    <Label fx:id="departmentLabel"
+           style="-fx-font-size: 16px; -fx-text-fill: #333;" />
+
+    <Label fx:id="statusLabel"
+           style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2b7a78;" />
+
+    <Label fx:id="salaryLabel"
+           style="-fx-font-size: 16px; -fx-text-fill: #333;" />
+
+    <Label fx:id="dateLabel"
+           style="-fx-font-size: 14px; -fx-text-fill: #777;" />
+
+    <TextArea fx:id="bioArea"
+              editable="false"
+              wrapText="true"
+              style="-fx-font-size: 14px; -fx-control-inner-background: #f9f9f9; -fx-border-color: #ccc; -fx-border-radius: 5; -fx-background-radius: 5;"
+              prefRowCount="4" />
+
+    <TextArea fx:id="historyArea"
+              editable="false"
+              wrapText="true"
+              style="-fx-font-size: 14px; -fx-control-inner-background: #f9f9f9; -fx-border-color: #ccc; -fx-border-radius: 5; -fx-background-radius: 5;"
+              prefRowCount="4" />
+</VBox>

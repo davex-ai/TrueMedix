@@ -1,0 +1,94 @@
+AnchorPane {
+    -fx-background-color: #f4f4f4;
+}
+.header-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-size: 12px;
+}
+
+VBox {
+    -fx-padding: 20;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-border-color: #0077B6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+    -fx-min-width: 300;
+    -fx-max-width: 800;
+    -fx-max-height: 600;
+}
+
+Label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0077B6;
+}
+
+TextField, TextArea, ComboBox {
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-padding: 8;
+    -fx-font-size: 14px;
+    -fx-pref-width: 250px;
+}
+
+Button {
+    -fx-background-color: #0077B6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-border-radius: 5;
+}
+
+Button:hover {
+    -fx-background-color: #005F8A;
+}
+
+Hyperlink {
+    -fx-font-size: 14px;
+    -fx-text-fill: red;
+    -fx-underline: true;
+}
+
+@media screen and (max-width: 600px) {
+    VBox {
+        -fx-padding: 10;
+        -fx-max-width: 100%;
+    }
+
+    TextField, TextArea, ComboBox {
+        -fx-pref-width: 100%;
+    }
+}
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #0077B6;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 3 25 3 10;
+    -fx-font-size: 14px;
+    -fx-pref-height: 30px;
+    -fx-text-fill: #000000;
+    -fx-pref-width: 220px;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5 0 5;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #0077B6;
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z";
+}
+
+.combo-box-popup {
+    -fx-background-color: white;
+    -fx-border-color: #0077B6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 5);
+}

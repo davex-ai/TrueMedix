@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.ManagePatientsController"
+            prefWidth="900" prefHeight="600" stylesheets="@../../css/forms.css"
+            style="-fx-background-color: #f8f9fa;">
+    <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+        <Label text="Manage Patients" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <HBox spacing="10">
+            <TextField fx:id="searchField" promptText="Search patients..." />
+            <Button text="Refresh" onAction="#refreshPatients"/>
+            <Button text="Back" onAction="#goBack"/>
+        </HBox>
+        <ScrollPane fitToWidth="true" style="-fx-background-color:transparent;">
+            <VBox fx:id="patientsContainer" spacing="15"/><padding><Insets top="10"/> </padding>
+        </ScrollPane>
+    </VBox>
+</AnchorPane>

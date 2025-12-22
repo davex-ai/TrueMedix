@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<VBox spacing="15" alignment="CENTER" xmlns:fx="http://javafx.com/fxml" styleClass="@../../css/departments.css"
+      fx:controller="org.example.project.hospitalmanagementsystem.controller.users.DepartmentView"
+      style="-fx-background-color: linear-gradient(to bottom right, #e3f2fd, #bbdefb);">
+
+    <Label fx:id="nameLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; " />
+    <Label fx:id="descriptionLabel" wrapText="true" style="-fx-text-fill: gray;" />
+    <Label text="Available Services"/>
+    <ListView fx:id="servicesListView" prefHeight="100" prefWidth="90" maxWidth="800"/>
+
+    <Label text="Our Doctors" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a2a2a;"/>
+    <HBox fx:id="doctorContainer" spacing="10" alignment="CENTER" />
+
+    <HBox spacing="20" alignment="BOTTOM_CENTER" style="primary-button">
+        <Button  text="Back" style="-fx-background-color: #2a9df4; -fx-text-fill: white; -fx-padding: 8 20; -fx-font-size: 14px; -fx-background-radius: 20;" onAction="#handleBack"/>
+        <Button text="Book Appointment" style="-fx-background-color: #2a9df4; -fx-text-fill: white; -fx-padding: 8 20; -fx-font-size: 14px; -fx-background-radius: 20;" onMouseClicked="#handleBookAppointment"/>
+    </HBox>
+
+
+</VBox>

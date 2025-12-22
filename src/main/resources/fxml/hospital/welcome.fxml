@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.media.MediaView?>
+
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Tooltip?>
+<StackPane styleClass="welcome-root" stylesheets="@../../css/styles.css"
+           xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.example.project.hospitalmanagementsystem.controller.hospital.WelcomePage">
+
+    <!-- Background Video -->
+    <MediaView fx:id="videoView" />
+
+    <!-- Hamburger Top-Left -->
+    <AnchorPane>
+        <MenuButton fx:id="hamburgerMenu" styleClass="hamburger-menu" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <graphic>
+                <ImageView fx:id="hamburgerIcon" fitHeight="20" fitWidth="20" />
+            </graphic>
+            <items>
+                <MenuItem onAction="#WantToKnowMore" text="Get To Know More" />
+                <MenuItem onAction="#openAboutUs" text="About Us" />
+
+            </items>
+        </MenuButton>
+    </AnchorPane>
+
+
+    <!-- Centered Overlay -->
+    <VBox alignment="CENTER" maxWidth="700" spacing="25" styleClass="overlay-box">
+        <Label styleClass="title" text="Welcome to Trumedix" />
+        <Label styleClass="sub-title" text="Primary Healthcare" />
+        <Label styleClass="subtitle" text="Your gateway to trusted and accessible health services." />
+
+        <HBox alignment="CENTER" spacing="20">
+            <Button onAction="#handleLogin" prefHeight="42.0" prefWidth="87.0" styleClass="login-button" text="Login">
+            <HBox.margin>
+            </HBox.margin></Button>
+            <Button onAction="#handleRegister" styleClass="register-button" text="Register" />
+        </HBox>
+
+        <Label styleClass="why-choose-us" text="Why Choose Us?" />
+
+        <FlowPane alignment="CENTER" hgap="20" vgap="20" prefWrapLength="600" >
+            <VBox styleClass="feature-box">
+                <Label styleClass="feature-title" text="24/7 Pharmacy">
+                    <tooltip>
+                        <Tooltip text="Available 24 hours!" />
+                    </tooltip>
+                </Label>
+                <Label styleClass="feature-description" text="Access essential medications anytime." />
+            </VBox>
+
+            <VBox styleClass="feature-box">
+                <Label styleClass="feature-title" text="Certified Labs" />
+                <Label styleClass="feature-description" text="Reliable diagnostics and quick results." />
+            </VBox>
+            <VBox styleClass="feature-box">
+                <Label styleClass="feature-title" text="Expert Doctors|Specialist Consultations" />
+            </VBox>
+            <VBox styleClass="feature-box">
+                <Label styleClass="feature-title" text="Free Diagnostic Tests" />
+                <Label styleClass="feature-description" text="Get yourself tested at no extra cost." />
+            </VBox>
+        </FlowPane>
+    </VBox>
+</StackPane>

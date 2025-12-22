@@ -1,0 +1,72 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f4faff;
+    -fx-padding: 20px;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.text-field, .combo-box, .date-picker, .text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cce0f5;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 6px 10px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #000000;
+}
+
+.text-field:focused, .combo-box:focused, .date-picker:focused, .text-area:focused {
+    -fx-border-color: #3399ff;
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 128, 255, 0.2), 6, 0.3, 0, 2);
+}
+
+.button {
+    -fx-background-color: #3399ff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.1), 4, 0, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: #007acc;
+}
+
+.button:pressed {
+    -fx-background-color: #005f99;
+}
+
+.title-label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #0066cc;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10px 0;
+}
+.text-area {
+    -fx-pref-height: 80px;
+}
+.image-view {
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+}
+.department-card {
+    -fx-background-color: white;
+    -fx-border-color: #007ACC;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 4);
+    -fx-cursor: hand;
+}
+.department-card:hover {
+    -fx-border-color: #005F9E;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 5);
+}
+

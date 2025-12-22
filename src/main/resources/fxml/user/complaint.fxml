@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.project.hospitalmanagementsystem.controller.users.Complaint"
+      spacing="15"
+      alignment="CENTER"
+       style="-fx-background-color: linear-gradient(to bottom right, #e3f2fd, #bbdefb);">
+
+  <Label text="Submit a Complaint"
+         style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+
+  <TextField fx:id="nameField"
+             promptText="Name"
+             maxWidth="300"
+             style="-fx-font-size: 14px;"/>
+
+  <ComboBox fx:id="categoryCombo"
+            promptText="Select Category"
+            maxWidth="300"
+            style="-fx-font-size: 14px;">
+    <items>
+      <FXCollections fx:factory="observableArrayList">
+        <String fx:value="Appointments" />
+        <String fx:value="Health Issues" />
+        <String fx:value="Doctor Behavior" />
+        <String fx:value="Facility Problems" />
+        <String fx:value="Billing" />
+        <String fx:value="Other" />
+      </FXCollections>
+    </items>
+  </ComboBox>
+
+  <Label text="Describe your issue" style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
+  <TextArea fx:id="messageArea"
+            promptText="Your detailed complaint"
+            prefRowCount="4"
+            maxWidth="800"
+            style="-fx-font-size: 14px;" />
+
+  <ComboBox fx:id="urgencyCombo"
+            promptText="Select Urgency"
+            maxWidth="300"
+            style="-fx-font-size: 14px;">
+    <items>
+      <FXCollections fx:factory="observableArrayList">
+        <String fx:value="Low" />
+        <String fx:value="Medium" />
+        <String fx:value="High" />
+      </FXCollections>
+    </items>
+  </ComboBox>
+
+  <TextField fx:id="phoneField"
+             promptText="Phone Number"
+             maxWidth="300"
+             style="-fx-font-size: 14px;"/>
+
+  <HBox spacing="10" alignment="CENTER">
+    <Button text="Upload Screenshot (Optional)"
+            onAction="#handleUpload"
+            style="-fx-background-color: #eeeeee; -fx-border-radius: 5; -fx-background-radius: 5;"/>
+    <Label fx:id="screenshotLabel" text="No file selected" style="-fx-text-fill: #777;" />
+  </HBox>
+
+  <HBox  alignment="BOTTOM_CENTER" spacing="10" >
+    <Button text="Submit Complaint" onAction="#handleSubmit"  style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 8 20 8 20; -fx-border-radius: 5; -fx-background-radius: 5;"/>
+    <Button text="Back" onMouseClicked="#handleBack"  style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 8 20 8 20; -fx-border-radius: 5; -fx-background-radius: 5;"/>
+  </HBox>
+
+</VBox>

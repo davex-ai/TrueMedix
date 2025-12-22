@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.users.DepartmentCard"
+            prefWidth="1400" prefHeight="800"
+            stylesheets="@../../css/departments.css">
+
+    <!-- Background -->
+    <AnchorPane styleClass="background-gradient"
+                AnchorPane.topAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0"
+                AnchorPane.bottomAnchor="0" >
+
+        <!-- Navigation Bar -->
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="nav-bar">
+            <Label text="Departments" styleClass="nav-title"/>
+        </HBox>
+
+        <!-- Content -->
+        <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="70" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" AnchorPane.bottomAnchor="30" maxWidth="1000">
+
+            <!-- Page Header -->
+            <Label text="Choose a Department" styleClass="section-title"/>
+            <Label text="Explore different medical departments to book appointments with our experts."
+                   wrapText="true" styleClass="subheading"/>
+
+            <!-- Highlight Stats -->
+            <HBox spacing="50" alignment="CENTER">
+                <VBox alignment="CENTER">
+                    <Label text="Available Slots" styleClass="highlight-title"/>
+                    <Label fx:id="availableSlotsLabel" text="23 slots available today" styleClass="highlight-detail"/>
+                </VBox>
+            </HBox>
+
+            <!-- Scrollable Department Cards -->
+                <TilePane fx:id="departmentTilePane"
+                          hgap="20" vgap="20"
+                          alignment="TOP_CENTER"
+                          prefTileWidth="300"
+                          prefColumns="3"
+                          styleClass="tile-pane"/>
+
+            <HBox spacing="10" alignment="BOTTOM_CENTER">
+                <Button text="← Back" onMouseClicked="#handleBack" styleClass="nav-button"/>
+            </HBox>
+    </VBox>
+    </AnchorPane>
+</AnchorPane>

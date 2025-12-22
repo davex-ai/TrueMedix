@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.AddAdminDept"
+            prefWidth="800" prefHeight="600"
+            stylesheets="@../../css/forms.css">
+
+    <!-- Container -->
+    <VBox spacing="15" alignment="TOP_CENTER" maxWidth="700"
+          AnchorPane.topAnchor="20" AnchorPane.leftAnchor="50"
+          AnchorPane.rightAnchor="50" AnchorPane.bottomAnchor="20"
+          styleClass="background-gradient">
+
+        <padding><Insets top="30" right="20" bottom="20" left="20"/> </padding>
+
+        <!-- Header -->
+        <Label text="Add New Department" styleClass="section-title"/>
+
+        <!-- Input Fields -->
+        <GridPane hgap="20" vgap="15" maxWidth="700">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" prefWidth="150"/>
+                <ColumnConstraints prefWidth="450"/>
+            </columnConstraints>
+
+            <!-- Department Name -->
+            <Label text="Department Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="departmentNameField" promptText="e.g. Cardiology" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <!-- Description -->
+            <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0" alignment="TOP_CENTER"/>
+            <TextArea fx:id="departmentDescField" promptText="Short description..." prefRowCount="3" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <!-- Operating Hours -->
+            <Label text="Operating Hours:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="operatingHoursField" promptText="e.g. 08:00 - 17:00" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <!-- Status -->
+            <Label text="Status:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="statusComboBox" promptText="Select status" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <!-- Assign Doctors -->
+            <Label text="Assign Doctors:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <ListView fx:id="doctorListView" prefHeight="150" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- Services -->
+        <VBox spacing="10" alignment="CENTER_LEFT" maxWidth="700"  style="-fx-padding: 15 0 0 0;">
+            <Label text="Services:" />
+            <ListView fx:id="servicesListView" editable="true" prefHeight="180" maxWidth="700"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT" maxWidth="700">
+                <TextField fx:id="serviceInputField" promptText="Enter service..." HBox.hgrow="ALWAYS"/>
+                <Button text="Add Service" onAction="#handleAddService" styleClass="small-button"/>
+                <Button text="Remove Selected" onAction="#handleRemoveService" styleClass="small-button"/>
+            </HBox>
+        </VBox>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- Action Buttons -->
+        <HBox spacing="20" alignment="CENTER" maxWidth="700" style="-fx-padding: 15 0 20 0;">
+            <Button text="Save Department" onAction="#handleSaveDepartment" styleClass="primary-button"/>
+            <Button text="Back" onAction="#handleBack" styleClass="primary-button" />
+        </HBox>
+
+    </VBox>
+</AnchorPane>

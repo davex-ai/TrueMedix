@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="org.example.project.hospitalmanagementsystem.controller.users.homepage"
+           stylesheets="@../../css/home.css">
+    <!-- Background Image Slot -->
+    <ImageView fx:id="backgroundImage" fitWidth="1920" fitHeight="1080" preserveRatio="false">
+        <image>
+            <Image url="@../../css/media/background.jpg"/>
+        </image>
+    </ImageView>
+    <BorderPane fx:id="homeRoot">
+
+        <!-- TOP NAVBAR -->
+        <top>
+            <HBox spacing="20" alignment="CENTER_RIGHT" styleClass="navbar">
+                <padding><Insets top="15"/></padding>
+
+                <!-- Logo -->
+                <Label text="Trumedix" styleClass="logo"/>
+
+                <!-- Navbar items -->
+                <HBox alignment="CENTER">
+            <HBox spacing="20" alignment="CENTER" styleClass="navbar" maxWidth="1000">
+                <padding><Insets top="15"/></padding>
+                <Label text="Complaint Form" onMouseClicked="#handleComplaintForm" styleClass="nav-item"/>
+                <Label  text="Book Appointment" onMouseClicked="#handleBookAppointment" styleClass="nav-item"/>
+                <Label text="Departments" onMouseClicked="#handleDepartmentPage" styleClass="nav-item"/>
+            </HBox>
+            </HBox>
+
+                <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
+
+                <!-- User profile section -->
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Label fx:id="usernameLabel" text="Hi, Group1" styleClass="profile-menu">
+                        <graphic>
+                            <ImageView fitWidth="30" fitHeight="30">
+                                <image>
+                                    <Image url="@../../media/avatar.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Label>
+
+
+                    <MenuButton fx:id="bellBtn" styleClass="floating-notification">
+                        <graphic>
+                            <ImageView fitWidth="20" fitHeight="20">
+                                <image>
+                                    <Image url="@../../media/notification.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </MenuButton>
+                </HBox>
+            </HBox>
+        </top>
+
+        <!-- CENTER CONTENT -->
+        <center>
+            <VBox alignment="TOP_CENTER" spacing="30">
+                <padding><Insets top="40"/></padding>
+
+                <!-- Title and Date -->
+                <Label fx:id="welcomeLabel" textAlignment="LEFT" styleClass="welcome-msg"/>
+                <Label fx:id="greetingLabel" styleClass="greeting"/>
+                <Label fx:id="dateLabel" styleClass="date-msg"/>
+
+                <!-- Appointment List -->
+                <VBox alignment="CENTER" maxWidth="400">
+                    <Label text="Your Appointments" styleClass="section-title"/>
+                    <ListView fx:id="appointmentsList" styleClass="appointments-list" prefHeight="200" prefWidth="500">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="10:00 AM - Dr. Smith (Cardiology)"/>
+                                <String fx:value="2:30 PM - Dr. Lee (Dermatology)"/>
+                            </FXCollections>
+                        </items>
+                    </ListView>
+                </VBox>
+
+
+                <!-- Cards Row (Moved below the Appointment List) -->
+                <HBox alignment="CENTER" spacing="30">
+                    <!-- Card 1: Daily Tip -->
+                    <VBox spacing="10" alignment="CENTER" styleClass="card" prefWidth="200" prefHeight="120">
+                        <Label text="🧠 Tip of the Day" styleClass="card-title"/>
+                        <Label fx:id="tipLabel"  wrapText="true" styleClass="card-content"/>
+                    </VBox>
+
+                    <!-- Card 2: Upcoming Appointment -->
+                    <VBox spacing="10" alignment="CENTER" styleClass="card" prefWidth="200" prefHeight="120">
+                        <Label text="📅 Upcoming" styleClass="card-title"/>
+                        <Label text="2:30 PM - Dr. Lee (Dermatology)" wrapText="true" styleClass="card-content"/>
+                    </VBox>
+
+                    <!-- Card 3: Health Reminder -->
+                    <VBox spacing="10" alignment="CENTER" styleClass="card" prefWidth="200" prefHeight="120">
+                        <Label text="⏰ Reminder" styleClass="card-title"/>
+                        <Label fx:id="reminder" wrapText="true" styleClass="card-content"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </center>
+    </BorderPane>
+
+    <!-- Floating Notification Button (outside navbar) -->
+
+</StackPane>

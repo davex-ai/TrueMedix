@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Circle?>
+
+<?import java.net.URL?>
+<ScrollPane fx:id="scrollPane" fitToWidth="true" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.project.hospitalmanagementsystem.controller.hospital.WantToKnowMore">
+    <VBox alignment="TOP_CENTER" spacing="30" styleClass="main-container">
+        <VBox.margin>
+            <Insets top="40.0"/>
+        </VBox.margin>
+
+        <stylesheets>
+            <URL value="@../../css/wanttoknowmore.css"/>
+        </stylesheets>
+
+        <!-- Page Title -->
+        <Label text="Want to Know More" styleClass="page-title"/>
+
+        <!-- Our Story Section -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="🛤 Our Story" styleClass="section-heading"/>
+            <Label text="Our journey began with a simple mission to deliver quality care..." wrapText="true" styleClass="section-text"/>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Mission Section -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="🎯 Mission" styleClass="section-heading"/>
+            <Label text="Our mission is to provide outstanding service to all patients..." wrapText="true" styleClass="section-text"/>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Achievements Section -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="🏆 Achievements" styleClass="section-heading"/>
+            <FlowPane hgap="20" vgap="20" alignment="CENTER">
+                <Button text="Milestone 1" styleClass="milestone-button"/>
+                <Button text="Milestone 2" styleClass="milestone-button"/>
+                <Button text="Milestone 3" styleClass="milestone-button"/>
+            </FlowPane>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Location Section -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="📍 Location" styleClass="section-heading"/>
+            <Label text="Main Office: 123 Health St, Wellness City." wrapText="true" styleClass="section-text"/>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Testimonials Section -->
+        <!-- Testimonials Section -->
+        <VBox spacing="30" alignment="CENTER">
+            <Label text="🗣 Testimonials" styleClass="section-heading"/>
+
+            <VBox spacing="20" alignment="CENTER">
+                <HBox spacing="10" alignment="CENTER_LEFT" maxWidth="600.0">
+                    <Circle radius="30" styleClass="circle-placeholder"/>
+                    <Label text="Customer 1: This place changed my life!" styleClass="testimonial-text"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_RIGHT" maxWidth="600.0">
+                    <Label text="Customer 2: Amazing staff and care." styleClass="testimonial-text"/>
+                    <Circle radius="30" styleClass="circle-placeholder"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT" maxWidth="600.0">
+                    <Circle radius="30" styleClass="circle-placeholder"/>
+                    <Label text="Customer 3: Quick and reliable services." styleClass="testimonial-text"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_RIGHT" maxWidth="600.0">
+                    <Label text="Customer 4: Highly recommend to everyone!" styleClass="testimonial-text"/>
+                    <Circle radius="30" styleClass="circle-placeholder"/>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Our Team Section -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="👥 Our Team" styleClass="section-heading"/>
+            <FlowPane hgap="15" vgap="15" alignment="CENTER">
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+                <Circle radius="40" styleClass="circle-placeholder"/>
+            </FlowPane>
+        </VBox>
+
+        <!-- Back Button -->
+
+        <!-- Footer -->
+        <HBox spacing="20" alignment="CENTER" styleClass="footer">
+            <Label text="123 Health St, Wellness City" styleClass="footer-text"/>
+            <Hyperlink fx:id="wantToKnowMoreLink" text="Go back" onAction="#goBackToWelcome"/>
+
+        </HBox>
+    </VBox>
+</ScrollPane>

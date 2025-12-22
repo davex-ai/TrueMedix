@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <?import javafx.scene.control.*?>
+        <?import javafx.scene.image.ImageView?>
+        <?import javafx.scene.image.Image?>
+        <?import javafx.scene.layout.*?>
+        <?import javafx.scene.shape.Rectangle?>
+<VBox fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.DoctorCardController"
+      xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="TOP_CENTER" stylesheets="@../../css/admin-home.css"
+      styleClass="doctor-card" onMouseClicked="#toggleExpanded">
+
+    <HBox alignment="TOP_RIGHT" spacing="5">
+        <Label fx:id="statusBadge" styleClass="status-badge"/>
+        <Button fx:id="optionsButton" styleClass="icon-button">
+            <graphic>
+                <ImageView fitWidth="16" fitHeight="16" preserveRatio="true">
+                    <Image url="@../../media/vert.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <ImageView fx:id="doctorImage" fitWidth="100" fitHeight="100" preserveRatio="true"/>
+    <Label fx:id="nameLabel" styleClass="name-label"/>
+    <Label fx:id="specializationLabel" styleClass="specialization-label"/>
+    <Label fx:id="departmentLabel" styleClass="department-label"/>
+    <Label fx:id="experienceLabel" styleClass="name-label"  />
+
+
+    <Label fx:id="employmentDateLabel"/>
+    <Label fx:id="salaryLabel"/>
+    <Label fx:id="pendingAppointmentsLabel"/>
+
+    <Rectangle fx:id="heatmapBar" height="5" width="200"/>
+
+    <!-- Hidden expandable section -->
+    <VBox fx:id="expandedSection" visible="false" managed="false" spacing="6">
+        <Separator/>
+        <Label fx:id="bioLabel" wrapText="true"/>
+        <Label fx:id="historyLabel" wrapText="true"/>
+    </VBox>
+</VBox>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.AdminComplaintsController">
+    <top>
+        <HBox spacing="10" >
+            <padding><Insets top="10"/> </padding>
+            <ComboBox fx:id="filterCategory" promptText="Filter by Category" />
+            <TextField fx:id="searchField" promptText="Search complaints..." onAction="#handleSearch"/>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="complaintTable">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Name"/>
+<!--                <TableColumn fx:id="emailColumn" text="Email"/>-->
+                <TableColumn fx:id="phoneColumn" text="Phone"/>
+                <TableColumn fx:id="categoryColumn" text="Category"/>
+                <TableColumn fx:id="urgencyColumn" text="Urgency"/>
+                <TableColumn fx:id="messageColumn" text="Complaint Summary"/>
+                <TableColumn fx:id="statusColumn" text="Status"/>
+                <TableColumn fx:id="submittedAtColumn" text="Submitted At"/>
+                <TableColumn fx:id="screenshotPathColumn" text="Screenshot"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <padding><Insets top="10"/> </padding>
+            <Button text="Respond" onAction="#handleRespond" />
+            <Button text="Delete" onAction="#handleDelete" />
+            <Button text="Refresh" onAction="#loadComplaints" />
+        </HBox>
+    </bottom>
+</BorderPane>

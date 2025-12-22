@@ -1,0 +1,81 @@
+.welcome-root {
+    -fx-background-color: transparent;
+}
+
+.overlay-box {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-padding: 40;
+    -fx-background-radius: 0;
+    -fx-alignment: center;
+
+}
+
+.title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003366;
+}
+
+.subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+.login-button, .register-button {
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+    border-radius: 0
+}
+
+.login-button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #003366;
+    -fx-text-fill: #003366;
+    border-radius: 0
+}
+
+.register-button {
+    -fx-background-color: #003366;
+    -fx-text-fill: white;
+    border-radius: 0
+}
+
+.why-choose-us {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.feature-box {
+        -fx-padding: 20;
+        -fx-background-color: #ffffff;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.3, 0, 4);
+        -fx-background-radius: 10;
+        -fx-max-width: 200px;
+        -fx-alignment: center;
+    }
+    .feature-box:hover {
+        -fx-background-color: #e6f0ff; /* Light blue on hover */
+        -fx-cursor: hand;
+        -fx-scale-x: 1.05;
+        -fx-scale-y: 1.05;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0.4, 0, 6);
+    }
+
+
+.feature-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #003366;
+
+}
+
+.feature-description {
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
+}
+
+.hamburger-menu {
+    -fx-background-color: transparent;
+}

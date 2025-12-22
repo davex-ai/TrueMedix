@@ -1,0 +1,74 @@
+.background-pane {
+    -fx-background-image: url("-fx-background-image: url(/org/example/project/hospitalmanagementsystem/media/background.jpg");
+    -fx-background-size: cover;
+}
+
+.navbar {
+    padding: 10px;
+    background-color: white;
+    border-bottom: 2px solid lightblue;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: black;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    -fx-background-color: lightblue;
+    -fx-text-fill: white;
+}
+
+.main-background {
+    -fx-background-color: white;
+    -fx-padding: 20;
+}
+
+.page-title {
+    -fx-font-size: 32px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.sub-heading {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+.section-heading {
+    -fx-font-size: 22px;
+    -fx-text-fill: lightblue;
+    -fx-font-weight: bold;
+}
+
+.light-blue-separator {
+    -fx-background-color: lightblue;
+    -fx-pref-height: 2px;
+}
+
+.footer {
+    -fx-padding: 20px;
+    -fx-alignment: center;
+    -fx-background-color: #f9f9f9;
+}
+
+.profile-pic {
+    -fx-clip: new Circle(40, 40, 40);
+    -fx-effect: dropshadow(gaussian, gray, 5, 0.5, 0, 0);
+}
+
+.milestone-button {
+    -fx-background-color: white;
+    -fx-border-color: lightblue;
+    -fx-border-radius: 8px;
+    -fx-font-weight: bold;
+}
+
+.milestone-button:hover {
+    -fx-background-color: lightblue;
+    -fx-text-fill: white;
+}

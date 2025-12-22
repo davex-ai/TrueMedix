@@ -1,0 +1,347 @@
+.background-gradient {
+    -fx-background-color: linear-gradient(to bottom right, #e3f2fd, #bbdefb);
+}
+
+.nav-bar {
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-background-color: transparent;
+}
+
+.nav-button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+}
+
+.nav-title {
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0d47a1;
+}
+
+.section-title {
+    -fx-font-size: 26;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0d47a1;
+}
+
+.subheading {
+    -fx-font-size: 14;
+    -fx-text-fill: #444;
+}
+
+.highlight-title {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0d47a1;
+}
+
+.highlight-detail {
+    -fx-text-fill: #666;
+    -fx-font-size: 14;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.tile-pane {
+    -fx-padding: 10;
+}
+
+.department-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-transition: all 0.2s ease-in-out;
+    -fx-cursor: hand;
+}
+
+.department-card:hover {
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4);
+}
+
+.department-title {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0d47a1;
+}
+
+.department-description {
+    -fx-text-fill: #555;
+    -fx-font-size: 13;
+}
+
+.department-hours {
+    -fx-text-fill: #777;
+    -fx-font-size: 12;
+}
+
+.department-image {
+    -fx-fit-to-width: true;
+    -fx-border-radius: 10;
+}
+//
+.department-card {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-padding: 20;
+    -fx-border-radius: 16;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0.3, 0, 4);
+    -fx-cursor: hand;
+    -fx-pref-width: 180;
+    -fx-pref-height: 160;
+    -fx-transition: all 0.3s ease-in-out;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.department-card:hover {
+    -fx-background-color: rgba(0, 123, 255, 0.08);
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0,123,255,0.4), 10, 0.4, 0, 5);
+}
+
+.department-label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #003366;
+    -fx-font-weight: bold;
+}
+
+.department-icon {
+    -fx-opacity: 0.9;
+}
+/* Base font and background */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: linear-gradient(to bottom right, #ecf0f3, #f8f9fa);
+}
+
+/* Layout container */
+.main-layout {
+    -fx-background-color: rgba(255, 255, 255, 0.85); /* semi-transparent white for background image */
+    -fx-padding: 30;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-spacing: 15;
+}
+
+/* Titles */
+.header {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 10 0;
+}
+
+.form-header {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+    -fx-padding: 0 0 15 0;
+}
+
+/* Overview section */
+.overview-text {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-wrap-text: true;
+    -fx-max-width: 400;
+}
+
+/* Buttons */
+.primary-button {
+ -fx-max-width: 140;
+    -fx-min-width: 100;
+    -fx-pref-width: 120;
+    -fx-background-color: linear-gradient(to right, #4285f4, #357ae8);
+    -fx-text-fill: white;
+    -fx-font-weight: 600;
+    -fx-font-size: 16px;
+    -fx-padding: 12 30;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(66,133,244,0.6), 6, 0, 0, 3);
+    -fx-transition: all 0.3s ease;
+}
+
+.primary-button:hover {
+-fx-background-color: linear-gradient(to right, #357ae8, #4285f4);
+-fx-effect: dropshadow(gaussian, rgba(66,133,244,0.8), 10, 0, 0, 5);
+}
+
+.secondary-button {
+    -fx-background-color: #ced4da;
+    -fx-text-fill: #212529;
+    -fx-font-weight: 600;
+    -fx-padding: 8 16;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.secondary-button:hover {
+      -fx-background-color: #e3eafc;
+        -fx-text-fill: #3a3f58;
+        -fx-font-weight: 600;
+        -fx-font-size: 14px;
+        -fx-padding: 10 25;
+        -fx-background-radius: 12;
+        -fx-cursor: hand;
+        -fx-effect: dropshadow(gaussian, rgba(58,63,88,0.15), 4, 0, 0, 2);
+        -fx-transition: all 0.3s ease;
+}
+
+/* Confirmation messages */
+.success-text {
+    -fx-text-fill: #28a745;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.error-text {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* Form fields */
+.text-field, .text-area {
+    -fx-background-radius: 8;
+    -fx-border-color: #ced4da;
+    -fx-border-radius: 8;
+    -fx-padding: 8;
+    -fx-font-size: 13px;
+}
+
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #2c7be5;
+    -fx-background-color: #ffffff;
+}
+.department-root {
+  -fx-padding: 30;
+  -fx-background-color: linear-gradient(to bottom right, #e8f0fe, #ffffff);
+  -fx-alignment: top_center;
+  -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.department-header {
+     -fx-font-size: 32px;
+        -fx-font-weight: 700;
+        -fx-text-fill: #1a73e8;
+        -fx-effect: dropshadow(gaussian, rgba(26,115,232,0.4), 3, 0, 0, 2);
+        -fx-padding: 0 0 10 0;
+}
+
+.overview-text {
+  -fx-font-size: 16px;
+     -fx-text-fill: #34495e;
+     -fx-background-color: transparent;
+     -fx-border-color: transparent;
+     -fx-padding: 8 15 12 15;
+     -fx-wrap-text: true;
+     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1);
+     -fx-background-radius: 10;
+}
+
+.section-title {
+     -fx-font-size: 22px;
+        -fx-font-weight: 600;
+        -fx-text-fill: #2c3e50;
+        -fx-padding: 20 0 8 0;
+        -fx-border-color: #1a73e8;
+        -fx-border-width: 0 0 2 0;
+        -fx-border-style: solid;
+ }
+
+.services-list Label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+.hours-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6c7a89;
+    -fx-padding: 15 0 20 0;
+    -fx-font-style: italic;
+}
+.service-item {
+    -fx-font-size: 16px;
+    -fx-text-fill: #3c4f76;
+    -fx-padding: 4 0 4 10;
+    -fx-effect: dropshadow(gaussian, rgba(58, 81, 118, 0.15), 1, 0, 0, 0);
+}
+/* Doctor cards if any */
+.doctor-card {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 3);
+    -fx-cursor: hand;
+    -fx-min-width: 180;
+    -fx-alignment: center;
+}
+
+.doctor-name {
+    -fx-font-weight: 700;
+    -fx-font-size: 16px;
+    -fx-text-fill: #2c3e50;
+}
+
+.doctor-specialty, .doctor-experience {
+    -fx-font-size: 13px;
+    -fx-text-fill: #5a6a8a;
+}
+.department-card {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 4, 0.0, 0, 2);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.nav-bar {
+    -fx-background-color: #2a9df4;
+    -fx-padding: 15;
+}
+
+.nav-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.section-title {
+    -fx-font-size: 26px;
+    -fx-text-fill: #2a2a2a;
+    -fx-font-weight: bold;
+}
+
+.subheading {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666;
+    -fx-padding: 0 0 20 0;
+}
+
+.nav-button {
+    -fx-background-color: #2a9df4;
+    -fx-text-fill: white;
+    -fx-padding: 8 20;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+}
+
+.nav-button:hover {
+    -fx-background-color: #238ad3;
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.hospital.Register"
+            styleClass="root">
+
+    <center>
+        <!-- StackPane to center VBox in the middle of the screen -->
+        <StackPane>
+            <!-- Card-like appearance -->
+            <VBox spacing="10" alignment="CENTER" styleClass="login-form"
+                  maxWidth="400" prefWidth="400" maxHeight="600" prefHeight="600"
+                  VBox.vgrow="NEVER" style="-fx-background-color: rgba(255, 255, 255, 0.7); -fx-background-radius: 10px; -fx-padding: 20px;" >
+
+                <ImageView fx:id="backgroundImageView" fitWidth="100" fitHeight="100" preserveRatio="true" />
+
+                <Label text="Register" styleClass="label-title"/>
+
+                <Label fx:id="messageLabel" text="Some message" visible="false"/>
+
+                <StackPane styleClass="input-container">
+                    <TextField fx:id="nametext" promptText="Full Name" styleClass="input-field"/>
+                </StackPane>
+
+                <StackPane styleClass="input-container">
+                    <TextField fx:id="emailField" promptText="Email ID" styleClass="input-field"/>
+                    <ImageView fitWidth="20" fitHeight="20" styleClass="input-icon">
+                        <image>
+                            <Image url="@../../media/email-icon.png"/>
+                        </image>
+                    </ImageView>
+                </StackPane>
+
+                <StackPane styleClass="input-container">
+                    <ImageView fitWidth="20" fitHeight="20" styleClass="input-icon">
+                        <image>
+                            <Image url="@../../media/password - icon.png"/>
+                        </image>
+                    </ImageView>
+                    <PasswordField fx:id="passwordField" promptText="Password" styleClass="input-field"/>
+                    <TextField fx:id="passwordFieldVisible" promptText="Visible Password" styleClass="input-field" visible="false" />
+                    <Button fx:id="showPwd" text="👁" onAction="#togglePassword" styleClass="login-button" style="-fx-background-color: transparent; -fx-padding: 0 10px 0 10px;"/>
+                </StackPane>
+
+                <HBox fx:id="adminCodeBox" visible="false" managed="false">
+                    <Label text="Admin Code:" />
+                    <TextField fx:id="adminCodeField" />
+                </HBox>
+
+                <!-- Role ChoiceBox -->
+                <ChoiceBox fx:id="roleChoiceBox"  styleClass="choicebox"/>
+                <ChoiceBox fx:id="genderchoice" styleClass="choicebox"/>
+
+                <!-- Remember Me and Forgot Password -->
+                <HBox spacing="30" alignment="CENTER">
+                    <CheckBox fx:id="rememberMeCheckbox" text="Remember me" styleClass="remember-checkbox"/>
+                </HBox>
+
+                 <!-- Birthdate Picker-->
+                <DatePicker fx:id="birth" promptText="Today's Date" styleClass="choicebox"/>
+                <TextField fx:id="addresss" promptText="Address" styleClass="input-field"/>
+
+                <Label fx:id="errorMessage" textFill="red" visible="false" styleClass="error-message"/>
+
+                <Button fx:id="RegisterButton" text="Register" onAction="#handleRegisterSubmit" styleClass="register-button"/>
+
+                <HBox alignment="CENTER">
+                    <Label text="Already have an account?" styleClass="info-text"/>
+                    <Hyperlink fx:id="loginHereLink" text="Login here" onAction="#handleLogin" styleClass="login-link"/>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Link CSS -->
+    <stylesheets>
+        <URL value="@../../css/register.css"/>
+    </stylesheets>
+
+</BorderPane>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.AdminAppointmentsController">
+    <top>
+        <HBox spacing="10" >
+            <padding><Insets top="10"/> </padding>
+            <ComboBox fx:id="filterDoctor" promptText="Filter by Doctor" />
+            <ComboBox fx:id="filterDepartment" promptText="Filter by Department" />
+            <ComboBox fx:id="filterStatus" promptText="Filter by Status" />
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="appointmentTable">
+            <columns>
+                <TableColumn fx:id="idColumn" text="id" />
+                <TableColumn fx:id="nameColumn" text="Name" />
+                <TableColumn fx:id="emailColumn" text="Email" />
+                <TableColumn fx:id="departmentColumn" text="Department" />
+                <TableColumn fx:id="doctorColumn" text="Doctor" />
+                <TableColumn fx:id="dateColumn" text="Date" />
+                <TableColumn fx:id="timeColumn" text="Time" />
+                <TableColumn fx:id="statusColumn" text="Status" />
+                <TableColumn fx:id="notesColumn" text="Notes" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT"> <padding><Insets top="10"/></padding>
+            <Button fx:id="approveButton" text="Approve" onAction="#approveAppointment" />
+            <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel" />
+            <Button text="Refresh" onAction="#loadAppointments" />
+            <TextField fx:id="searchField" onKeyReleased="#onSearch" promptText="Search Appointments..." />
+            <Label text="Optional Message to Patient:"/>
+            <TextArea fx:id="messageField" promptText="e.g. Your lab test is ready" maxHeight="100" maxWidth="300"/>
+        </HBox>
+    </bottom>
+</BorderPane>

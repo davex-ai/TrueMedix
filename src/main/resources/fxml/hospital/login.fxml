@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.hospital.LoginPage"
+            styleClass="root">
+
+    <center>
+        <!-- StackPane to center VBox in the middle of the screen -->
+        <StackPane>
+            <!-- Card-like appearance -->
+            <VBox spacing="10" alignment="CENTER" styleClass="login-form"
+                  maxWidth="400" prefWidth="400" maxHeight="600" prefHeight="600"
+                  VBox.vgrow="NEVER" style="-fx-background-color: rgba(255, 255, 255, 0.7); -fx-background-radius: 10px; -fx-padding: 20px;" >
+
+                <ImageView fx:id="backgroundImageView" fitWidth="100" fitHeight="100" preserveRatio="true" />
+
+                <Label text="Login" styleClass="label-title"/>
+
+                <StackPane styleClass="input-container">
+                    <TextField fx:id="emailField" promptText="Email ID" styleClass="input-field"/>
+                    <ImageView fitWidth="20" fitHeight="20" styleClass="input-icon">
+                        <image>
+                            <Image url="@../../media/email-icon.png"/>
+                        </image>
+                    </ImageView>
+                </StackPane>
+
+                <StackPane styleClass="input-container">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                <PasswordField fx:id="passwordField" promptText="Password" styleClass="input-field"/>
+<!--                    <ImageView fitWidth="20" fitHeight="20" styleClass="input-icon">-->
+<!--                        <image>-->
+<!--                            <Image url="@../media/password-icon.png"/>-->
+<!--                        </image>-->
+<!--                    </ImageView>-->
+                    </HBox>
+                    <TextField fx:id="passwordFieldVisible" promptText="Visible Password" styleClass="input-field" visible="false" />
+                    <Button fx:id="showPwd" text="👁" onAction="#togglePassword" styleClass="login-button" style="-fx-background-color: transparent; -fx-padding: 0 10px 0 10px;"/>
+                </StackPane>
+
+                <!-- Role ChoiceBox -->
+                <ChoiceBox fx:id="roleChoiceBox"  styleClass="choicebox"/>
+
+                <!-- Remember Me and Forgot Password -->
+                <HBox spacing="30" alignment="CENTER">
+                    <Hyperlink fx:id="forgotPasswordLink" text="Forgot password?" onAction="#handleForgotPassword" styleClass="hyperlink"/>
+                </HBox>
+
+                <Label fx:id="errorMessage" textFill="red" visible="false" styleClass="error-message"/>
+
+                <Button fx:id="loginButton" text="Login" onAction="#handleLoginSubmit" styleClass="login-button"/>
+
+
+                <HBox alignment="CENTER">
+                    <Label text="Don't have an account?" styleClass="info-text"/>
+                    <Hyperlink fx:id="registerHereLink" text="Register here" onAction="#goToRegister" styleClass="register-link"/>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Link CSS -->
+    <stylesheets>
+        <URL value="@../../css/login.css"/>
+    </stylesheets>
+
+</BorderPane>

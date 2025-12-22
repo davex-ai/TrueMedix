@@ -1,0 +1,71 @@
+/* login.css */
+.root {
+    -fx-background-image: url("media/background.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+
+.register-button {
+    -fx-pref-width: 300px;
+    -fx-padding: 10px;
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+.register-button:hover {
+    -fx-background-color: #0056b3;
+}
+
+
+
+.input-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 10px;
+    -fx-background-color: transparent;  /* Make sure it's transparent */
+    -fx-border-color: #ccc;
+    -fx-padding-right: 30px;
+}
+.password-field, .visible-password-field {
+    -fx-pref-width: 300px;
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+    -fx-border-color: #ccc;
+}
+
+.input-container {
+    -fx-spacing: 10px;
+    -fx-alignment: center-right;  /* Align content to the right */
+    -fx-padding: 0 10px 0 0
+}
+.input-icon {
+    -fx-padding: 0 10px 0 0; /* Ensure the icon stays at the right */
+    -fx-halignment: right;  /* Align icon to the right */
+    -fx-valignment: center; /* Ensure icon stays vertically centered */
+}
+
+
+.choicebox {
+    -fx-pref-width: 300px;
+    -fx-padding: 10px;
+    -fx-background-color: #f0f0f0; /* Light background for the ChoiceBox */
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+}
+
+.hyperlink, .login-link {
+    -fx-text-fill: #007bff;
+    -fx-font-size: 14px;
+}
+
+.error-message {
+    -fx-font-size: 14px;
+}
+
+.label-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}

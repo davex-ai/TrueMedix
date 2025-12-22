@@ -1,0 +1,68 @@
+.main-container {
+    -fx-background-color: white;
+}
+
+.page-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: lightblue;
+}
+
+.section-heading {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: lightblue;
+}
+
+.section-text {
+    -fx-font-size: 16px;
+    -fx-text-fill: black;
+}
+
+.testimonial-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
+}
+
+.circle-placeholder {
+    -fx-fill: lightgray;
+}
+
+.milestone-button {
+    -fx-background-color: lightblue;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.section-line {
+    -fx-stroke: lightblue;
+    -fx-stroke-width: 2;
+}
+
+.back-button {
+    -fx-background-color: lightblue;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+
+.footer {
+    -fx-padding: 40px;
+}
+
+.footer-text {
+    -fx-text-fill: gray;
+    -fx-font-size: 16px;
+}
+
+.footer-link {
+    -fx-text-fill: lightblue;
+    -fx-font-size: 16px;
+        -fx-font-weight: bold;
+}
+.footer-link:hover {
+    -fx-underline: true;
+}

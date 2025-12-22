@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.image.ImageView?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+     fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.AddDoctorController"
+      spacing="15" stylesheets="@../../css/forms.css"><padding><Insets top="20"/> </padding>
+
+  <GridPane hgap="10" vgap="10">
+    <Label text="Name" />
+    <TextField fx:id="nameField" GridPane.columnIndex="1"/>
+
+    <Label text="Department" GridPane.rowIndex="1"/>
+    <ComboBox fx:id="departmentCombo" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Label text="Status" GridPane.rowIndex="2"/>
+    <ComboBox fx:id="statusCombo" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Label text="Employment Date" GridPane.rowIndex="3"/>
+    <DatePicker fx:id="employmentDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <Label text="Salary" GridPane.rowIndex="4"/>
+    <TextField fx:id="salaryField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+    <ImageView fx:id="photopreview" GridPane.rowIndex="5" GridPane.columnIndex="2"  fitWidth="150" fitHeight="150" preserveRatio="true" />
+
+    <Label text="Photo" GridPane.rowIndex="5"/>
+    <Button text="Upload" onAction="#handlePhotoUpload" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+    <Label text="Bio" GridPane.rowIndex="6"/>
+    <TextArea fx:id="bioArea" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+    <Label text="History" GridPane.rowIndex="7"/>
+    <TextArea fx:id="historyArea" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+    <Label text="Specialization" GridPane.rowIndex="8"/>
+    <TextField fx:id="specializationField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+  </GridPane>
+
+  <HBox spacing="20" alignment="CENTER_RIGHT">
+  <Button text="Back" onAction="#handleBack"/>
+  <Button text="Add Doctor" onAction="#handleAddDoctor"/>
+   </HBox>
+</VBox>

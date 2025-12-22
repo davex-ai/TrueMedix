@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.project.hospitalmanagementsystem.controller.users.DocCard"
+      spacing="10" style="-fx-padding: 15;
+             -fx-border-color: #ddd;
+             -fx-border-width: 1;
+             -fx-border-radius: 8;
+             -fx-background-color: white;
+             -fx-background-radius: 8;
+             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);" maxWidth="300" alignment="BASELINE_CENTER">
+
+    <Label fx:id="nameLabel" text="Doctor Name" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+    <Label fx:id="yoeLabel" text="Years of Experience: 0"/>
+    <Label fx:id="specializationLabel" text="Specialization: N/A"/>
+
+</VBox>

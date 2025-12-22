@@ -1,0 +1,60 @@
+/* Apply blurred hospital background */
+#aboutPane {
+    -fx-background-image: url("/media/back.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+/* Main container pane overlay style */
+#mainContainer {
+    -fx-background-color: rgba(255, 255, 255, 0.85); /* translucent white overlay */
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+/* Section heading */
+.section-heading {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #00aaff; /* light blue */
+}
+
+/* Subsection heading */
+.subsection-heading {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #00aaff;
+}
+
+/* Body text */
+.paragraph-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-wrap-text: true;
+    -fx-max-width: 600;
+}
+
+/* Footer or small notes */
+.footer-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Horizontal line */
+.separator {
+    -fx-background-color: #00aaff;
+    -fx-pref-width: 600;
+}
+
+/* Hyperlink */
+.hyperlink {
+    -fx-text-fill: #007acc;
+    -fx-font-size: 14px;
+    -fx-underline: true;
+}
+.hyperlink:hover {
+    -fx-text-fill: #00aaff;
+}
