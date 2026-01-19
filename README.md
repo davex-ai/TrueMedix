@@ -1,5 +1,5 @@
 # TruMediX HMS – MVP
-
+.
 A lightweight **Hospital Management System (HMS)** built with **Java**, **JavaFX (FXML)**, and **MySQL (XAMPP)**. This MVP version handles core hospital operations with stable database connectivity.
 
 ---
