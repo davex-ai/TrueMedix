@@ -3,47 +3,170 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
 
-<AnchorPane fx:id="contentPane" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.Admin"
-            prefWidth="1400" prefHeight="800"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.Admin"
+            prefWidth="1280" prefHeight="800"
             stylesheets="@../../css/admin-home.css">
 
-    <!-- Sidebar -->
-    <VBox fx:id="sidebar" spacing="50" alignment="TOP_CENTER"
-          AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-          prefWidth="250" styleClass="sidebar">
+    <!-- ═══════════════════════════════════════════════════════════
+         LEFT SIDEBAR
+    ════════════════════════════════════════════════════════════════ -->
+    <left>
+        <VBox fx:id="sidebar" prefWidth="230" styleClass="sidebar" spacing="0">
 
-        <Label  text="Admin Panel" styleClass="sidebar-title" style="-fx-text-fill: white;"/>
-         <Button text="Manage Doctors" styleClass="sidebar-button" onAction="#manageDoctors" />
-        <Button text="Manage Patients" styleClass="sidebar-button" onAction="#managePatients" />
-        <Button text="Appointments" styleClass="sidebar-button" onAction="#viewAppointments" />
-        <Button text="Departments" styleClass="sidebar-button" onAction="#viewDepartments" />
-        <Button text="Complaints" styleClass="sidebar-button" onAction="#viewComplaints" />
-    </VBox>
+            <!-- Brand -->
+            <VBox styleClass="sidebar-brand" alignment="CENTER">
+                <padding><Insets top="28" bottom="28" left="20" right="20"/></padding>
+                <Label text="⚕" styleClass="sidebar-logo"/>
+                <Label text="TruMedix" styleClass="sidebar-app-name"/>
+                <Label text="Hospital Management" styleClass="sidebar-app-sub"/>
+            </VBox>
 
-    <!-- Main Content -->
-    <VBox spacing="30"  AnchorPane.leftAnchor="250" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
-        <padding><Insets top="30"/> </padding>
-        <!-- Header -->
-        <HBox alignment="CENTER_RIGHT" spacing="20">
-            <Label fx:id="adminNameLabel" text="Welcome, Admin" styleClass="admin-welcome" />
-            <Button fx:id="notificationButton" text="🔔" styleClass="header-button" />
-        </HBox>
+            <Label text="MAIN MENU" styleClass="sidebar-section-label">
+                <padding><Insets top="16" bottom="8" left="24" right="0"/></padding>
+            </Label>
 
-        <!-- Dashboard Cards -->
-        <HBox spacing="40" alignment="CENTER">
-            <VBox alignment="CENTER" styleClass="card">
-                <Label text="Total Patients" styleClass="card-title" />
-                <Label fx:id="patientCountLabel" text="4" styleClass="card-value" />
-            </VBox>
-            <VBox alignment="CENTER" styleClass="card">
-                <Label text="Appointments Today" styleClass="card-title" />
-                <Label fx:id="appointmentCountLabel" text="0" styleClass="card-value" />
-            </VBox>
-            <VBox alignment="CENTER" styleClass="card">
-                <Label text="Available Doctors" styleClass="card-title" />
-                <Label fx:id="doctorCountLabel" text="0" styleClass="card-value" />
-            </VBox>
-        </HBox>
-    </VBox>
-</AnchorPane>
+            <!-- Nav Buttons -->
+            <Button fx:id="btnDashboard"    text="⊞  Dashboard"       styleClass="sidebar-button,sidebar-button-active" onAction="#showDashboard"    maxWidth="Infinity"/>
+            <Button fx:id="btnPatients"     text="👥  Patients"         styleClass="sidebar-button"                       onAction="#managePatients"   maxWidth="Infinity"/>
+            <Button fx:id="btnDoctors"      text="🩺  Doctors"          styleClass="sidebar-button"                       onAction="#manageDoctors"    maxWidth="Infinity"/>
+            <Button fx:id="btnAppointments" text="📅  Appointments"     styleClass="sidebar-button"                       onAction="#viewAppointments" maxWidth="Infinity"/>
+            <Button fx:id="btnComplaints"   text="📋  Complaints"       styleClass="sidebar-button"                       onAction="#viewComplaints"   maxWidth="Infinity"/>
+            <Button fx:id="btnDepartments"  text="🏥  Departments"      styleClass="sidebar-button"                       onAction="#viewDepartments"  maxWidth="Infinity"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <!-- Admin profile strip -->
+            <HBox styleClass="sidebar-profile" alignment="CENTER_LEFT" spacing="12">
+                <padding><Insets top="16" bottom="16" left="20" right="16"/></padding>
+                <Label text="👤" styleClass="sidebar-avatar"/>
+                <VBox spacing="2">
+                    <Label fx:id="sidebarAdminName" text="Admin"  styleClass="sidebar-profile-name"/>
+                    <Label text="Administrator"                    styleClass="sidebar-profile-role"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </left>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         CENTER
+    ════════════════════════════════════════════════════════════════ -->
+    <center>
+        <VBox styleClass="main-area" spacing="0">
+
+            <!-- TOP HEADER BAR -->
+            <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="16" prefHeight="64">
+                <padding><Insets top="0" bottom="0" left="32" right="28"/></padding>
+
+                <Label fx:id="pageTitleLabel" text="Admin Dashboard" styleClass="page-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- Search -->
+                <HBox styleClass="search-box" alignment="CENTER_LEFT" spacing="8">
+                    <Label text="🔍" styleClass="search-icon"/>
+                    <TextField fx:id="globalSearchField" promptText="Search patients, doctors…"
+                               styleClass="search-field" prefWidth="230"/>
+                </HBox>
+
+                <!-- Notification bell + badge -->
+                <StackPane styleClass="notif-wrapper">
+                    <Button fx:id="notificationButton" text="🔔" styleClass="icon-button" onAction="#openNotifications"/>
+                    <Label fx:id="notificationBadge" text="" styleClass="notif-badge" StackPane.alignment="TOP_RIGHT"/>
+                </StackPane>
+
+                <!-- Admin pill -->
+                <HBox styleClass="admin-pill" alignment="CENTER" spacing="10">
+                    <Label text="👤" styleClass="admin-avatar-small"/>
+                    <Label fx:id="adminNameLabel" text="Admin" styleClass="admin-name-label"/>
+                </HBox>
+            </HBox>
+
+            <!-- SCROLLABLE CONTENT -->
+            <ScrollPane fitToWidth="true" styleClass="content-scroll" VBox.vgrow="ALWAYS">
+                <VBox styleClass="content-body" spacing="28">
+                    <padding><Insets top="28" bottom="28" left="32" right="32"/></padding>
+
+                    <!-- SUMMARY CARDS -->
+                    <GridPane hgap="20" vgap="20">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                        </columnConstraints>
+
+                        <!-- Total Patients -->
+                        <VBox GridPane.columnIndex="0" styleClass="stat-card,card-blue" spacing="6">
+                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="👥" styleClass="card-icon"/>
+                                <Label text="Total Patients" styleClass="card-title"/>
+                            </HBox>
+                            <Label fx:id="patientCountLabel"  text="—" styleClass="card-value"/>
+                            <Label fx:id="patientTrendLabel"  text=""  styleClass="card-trend"/>
+                        </VBox>
+
+                        <!-- Today Appointments -->
+                        <VBox GridPane.columnIndex="1" styleClass="stat-card,card-teal" spacing="6">
+                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="📅" styleClass="card-icon"/>
+                                <Label text="Today's Appointments" styleClass="card-title"/>
+                            </HBox>
+                            <Label fx:id="appointmentCountLabel"  text="—" styleClass="card-value"/>
+                            <Label fx:id="appointmentTrendLabel"  text=""  styleClass="card-trend"/>
+                        </VBox>
+
+                        <!-- Available Doctors -->
+                        <VBox GridPane.columnIndex="2" styleClass="stat-card,card-indigo" spacing="6">
+                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="🩺" styleClass="card-icon"/>
+                                <Label text="Available Doctors" styleClass="card-title"/>
+                            </HBox>
+                            <Label fx:id="doctorCountLabel"  text="—" styleClass="card-value"/>
+                            <Label fx:id="doctorTrendLabel"  text=""  styleClass="card-trend"/>
+                        </VBox>
+
+                        <!-- Monthly Revenue -->
+                        <VBox GridPane.columnIndex="3" styleClass="stat-card,card-emerald" spacing="6">
+                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="💰" styleClass="card-icon"/>
+                                <Label text="Monthly Revenue" styleClass="card-title"/>
+                            </HBox>
+                            <Label fx:id="revenueLabel"      text="—"                  styleClass="card-value"/>
+                            <Label fx:id="revenueTrendLabel" text="From appointments"  styleClass="card-trend"/>
+                        </VBox>
+                    </GridPane>
+
+                    <!-- CHARTS ROW -->
+                    <HBox spacing="20">
+
+                        <!-- Bar Chart – Appointments per Month -->
+                        <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" spacing="10">
+                            <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
+                            <Label text="Appointments per Month" styleClass="section-title"/>
+                            <BarChart fx:id="appointmentsBarChart" styleClass="dash-chart"
+                                      prefHeight="230" legendVisible="false" animated="true">
+                                <xAxis><CategoryAxis label="Month"/></xAxis>
+                                <yAxis><NumberAxis label="Count"/></yAxis>
+                            </BarChart>
+                        </VBox>
+
+                        <!-- Pie Chart – Patients by Department -->
+                        <VBox styleClass="chart-card" prefWidth="320" spacing="10">
+                            <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
+                            <Label text="Doctors by Department" styleClass="section-title"/>
+                            <PieChart fx:id="departmentPieChart" styleClass="dash-chart"
+                                      prefHeight="230" labelsVisible="true" animated="true"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </center>
+
+</BorderPane>

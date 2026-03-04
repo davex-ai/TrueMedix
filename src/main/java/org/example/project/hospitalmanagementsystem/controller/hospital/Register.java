@@ -191,7 +191,7 @@ public class Register {
 
             if ("Admin".equals(role)) {
                 Admin controller = loader.getController();
-                controller.setAdminNameLabel(name);
+                controller.setAdminName(name);
             } else {
                 homepage controller = loader.getController();
                 controller.setUsername(name);

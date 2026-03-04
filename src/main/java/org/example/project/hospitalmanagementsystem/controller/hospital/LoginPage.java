@@ -113,17 +113,11 @@ public class LoginPage {
                     Parent root = loader.load();
                     if ("Admin".equals(role)) {
                         Admin controller = loader.getController();
-                        controller.setAdminNameLabel(name); // ← Use name
+                        controller.setAdminName(name); // ← Use name
                     } else {
                         homepage controller = loader.getController();
                         controller.setUsername(name); // ← Use name
                         controller.setUserEmail(userEmail); // NEW: Pass user ID
-
-//                        Complaint complaintController = controller.getComplaintController(); // <-- You must expose this method in homepage
-//                        if (complaintController != null) {
-//                            complaintController.setUserEmail(userEmail); // ✅ Pass user ID to complaint controller
-//                        }
-
                     }
 
                     Stage stage = (Stage) loginButton.getScene().getWindow();

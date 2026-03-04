@@ -131,4 +131,322 @@
     -fx-scale-x: 1.02;
     -fx-scale-y: 1.02;
 }
+/* ═══════════════════════════════════════════════════════════════
+   admin-home.css  –  TruMedix Admin Dashboard
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Palette variables ─────────────────────────────────────────── */
+* {
+    -color-bg:           #f0f4f8;
+    -color-surface:      #ffffff;
+    -color-sidebar:      #0f172a;
+    -color-sidebar-text: #94a3b8;
+    -color-accent:       #3b82f6;
+    -color-border:       #e2e8f0;
+    -color-text-primary: #1e293b;
+    -color-text-muted:   #64748b;
+    -radius:             12px;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   ROOT / BACKGROUND
+══════════════════════════════════════════════════════════════════ */
+.root {
+    -fx-background-color: -color-bg;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════════════════════════════ */
+.sidebar {
+    -fx-background-color: -color-sidebar;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 16, 0, 4, 0);
+}
+
+.sidebar-brand {
+    -fx-border-color: transparent transparent #1e293b transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.sidebar-logo {
+    -fx-font-size: 36px;
+    -fx-text-fill: #3b82f6;
+}
+
+.sidebar-app-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 4 0 0 0;
+}
+
+.sidebar-app-sub {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-sidebar-text;
+}
+
+.sidebar-section-label {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #475569;
+    -fx-letter-spacing: 1.2px;
+}
+
+/* Nav buttons */
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-sidebar-text;
+    -fx-font-size: 13.5px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 13 24 13 24;
+    -fx-cursor: hand;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-graphic-text-gap: 10;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+}
+
+.sidebar-button-active {
+    -fx-background-color: #1d4ed8;
+    -fx-text-fill: white !important;
+    -fx-border-color: transparent transparent transparent #60a5fa;
+    -fx-border-width: 0 0 0 3;
+}
+
+.sidebar-profile {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #1e293b transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.sidebar-avatar {
+    -fx-font-size: 26px;
+    -fx-text-fill: -color-sidebar-text;
+}
+
+.sidebar-profile-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.sidebar-profile-role {
+    -fx-font-size: 11px;
+    -fx-text-fill: -color-sidebar-text;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MAIN AREA
+══════════════════════════════════════════════════════════════════ */
+.main-area {
+    -fx-background-color: -color-bg;
+}
+
+/* ── Top bar ───────────────────────────────────────────────────── */
+.topbar {
+    -fx-background-color: -color-surface;
+    -fx-border-color: transparent transparent -color-border transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 2);
+}
+
+.page-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text-primary;
+}
+
+/* Search */
+.search-box {
+    -fx-background-color: -color-bg;
+    -fx-background-radius: 8px;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 8px;
+    -fx-padding: 0 12 0 12;
+    -fx-pref-height: 38px;
+}
+
+.search-icon { -fx-font-size: 14px; -fx-text-fill: -color-text-muted; }
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-text-primary;
+    -fx-prompt-text-fill: -color-text-muted;
+}
+.search-field:focused { -fx-border-color: transparent; }
+
+/* Notification bell */
+.notif-wrapper { -fx-pref-width: 38px; -fx-pref-height: 38px; }
+
+.icon-button {
+    -fx-background-color: -color-bg;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-font-size: 16px;
+    -fx-pref-width: 38px;
+    -fx-pref-height: 38px;
+    -fx-cursor: hand;
+}
+.icon-button:hover { -fx-background-color: #e0e7ef; }
+
+.notif-badge {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 99px;
+    -fx-padding: 1 4 1 4;
+    -fx-translate-x: 6;
+    -fx-translate-y: -4;
+}
+
+/* Admin pill */
+.admin-pill {
+    -fx-background-color: -color-bg;
+    -fx-border-color: -color-border;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 6 14 6 10;
+    -fx-cursor: hand;
+}
+.admin-avatar-small { -fx-font-size: 16px; }
+.admin-name-label   { -fx-font-size: 13px; -fx-text-fill: -color-text-primary; -fx-font-weight: bold; }
+
+/* ── Scroll pane ───────────────────────────────────────────────── */
+.content-scroll {
+    -fx-background-color: transparent;
+    -fx-background: -color-bg;
+    -fx-border-color: transparent;
+}
+.content-scroll > .viewport { -fx-background-color: -color-bg; }
+
+/* ══════════════════════════════════════════════════════════════════
+   STAT CARDS
+══════════════════════════════════════════════════════════════════ */
+.stat-card {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: -radius;
+    -fx-border-radius: -radius;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 3);
+    -fx-border-color: -color-border;
+    -fx-border-width: 1;
+}
+
+.stat-card .card-icon  { -fx-font-size: 18px; }
+.stat-card .card-title { -fx-font-size: 12px; -fx-text-fill: -color-text-muted; -fx-font-weight: bold; }
+.stat-card .card-value { -fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: -color-text-primary; }
+.stat-card .card-trend { -fx-font-size: 11px; -fx-text-fill: -color-text-muted; }
+
+/* Coloured left border accents */
+.card-blue    { -fx-border-color: #3b82f6 transparent transparent transparent; -fx-border-width: 3 0 0 0; }
+.card-teal    { -fx-border-color: #0d9488 transparent transparent transparent; -fx-border-width: 3 0 0 0; }
+.card-indigo  { -fx-border-color: #6366f1 transparent transparent transparent; -fx-border-width: 3 0 0 0; }
+.card-emerald { -fx-border-color: #10b981 transparent transparent transparent; -fx-border-width: 3 0 0 0; }
+
+/* ══════════════════════════════════════════════════════════════════
+   CHART CARDS
+══════════════════════════════════════════════════════════════════ */
+.chart-card {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: -radius;
+    -fx-border-radius: -radius;
+    -fx-border-color: -color-border;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);
+}
+
+.section-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text-primary;
+}
+
+.dash-chart {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TABLE CARD
+══════════════════════════════════════════════════════════════════ */
+.table-card {
+    -fx-background-color: -color-surface;
+    -fx-background-radius: -radius;
+    -fx-border-radius: -radius;
+    -fx-border-color: -color-border;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);
+}
+
+.dash-table {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: -color-border;
+}
+
+.dash-table .column-header {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: transparent transparent -color-border transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.dash-table .column-header .label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -color-text-muted;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.dash-table .table-row-cell {
+    -fx-background-color: -color-surface;
+    -fx-border-color: transparent transparent -color-border transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-font-size: 13px;
+    -fx-text-fill: -color-text-primary;
+}
+
+.dash-table .table-row-cell:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.dash-table .table-row-cell:selected {
+    -fx-background-color: #eff6ff;
+}
+
+.table-placeholder {
+    -fx-text-fill: -color-text-muted;
+    -fx-font-size: 13px;
+}
+
+/* ── Link button ───────────────────────────────────────────────── */
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-accent;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-padding: 4 8 4 8;
+}
+.link-button:hover { -fx-text-fill: #1d4ed8; }
+
+/* ══════════════════════════════════════════════════════════════════
+   SCROLL BAR (subtle)
+══════════════════════════════════════════════════════════════════ */
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd5e1;
+    -fx-background-radius: 4px;
+}
+.scroll-bar:vertical .track { -fx-background-color: transparent; }
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button { -fx-background-color: transparent; -fx-pref-height: 0; }
 
