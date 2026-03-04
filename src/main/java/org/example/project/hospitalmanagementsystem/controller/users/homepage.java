@@ -145,24 +145,6 @@ public class homepage {
     }
 
         @FXML
-        private void handleComplaintForm(MouseEvent event) {
-            System.out.println("Redirect to complaint form...");
-            // TODO: Load complaint form FXML
-              try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/complaint.fxml"));
-                    Parent root = loader.load();
-                    Complaint controller = loader.getController();
-                     controller.setUserEmail(userEmail);
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setTitle("Complaint");
-                    stage.setScene(new Scene(root, 1400,800));
-                    stage.setMaximized(true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
-
-        @FXML
         private void handleBookAppointment(MouseEvent event) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/appointment.fxml"));
@@ -183,6 +165,20 @@ public class homepage {
     private void handleDepartmentPage(MouseEvent event)throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/departmentuserCard.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 1400, 800));
+            stage.setTitle("Departments");
+            stage.setMaximized(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleComplaintPage(MouseEvent event)throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/complaint.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root, 1400, 800));

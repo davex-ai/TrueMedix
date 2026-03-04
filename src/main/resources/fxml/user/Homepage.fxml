@@ -31,7 +31,7 @@
                 <HBox alignment="CENTER">
             <HBox spacing="20" alignment="CENTER" styleClass="navbar" maxWidth="1000">
                 <padding><Insets top="15"/></padding>
-                <Label text="Complaint Form" onMouseClicked="#handleComplaintForm" styleClass="nav-item"/>
+                <Label text="Complaint Form" onMouseClicked="#handleComplaintPage" styleClass="nav-item"/>
                 <Label  text="Book Appointment" onMouseClicked="#handleBookAppointment" styleClass="nav-item"/>
                 <Label text="Departments" onMouseClicked="#handleDepartmentPage" styleClass="nav-item"/>
             </HBox>

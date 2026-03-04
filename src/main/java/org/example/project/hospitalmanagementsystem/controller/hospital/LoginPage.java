@@ -119,10 +119,10 @@ public class LoginPage {
                         controller.setUsername(name); // ← Use name
                         controller.setUserEmail(userEmail); // NEW: Pass user ID
 
-                        Complaint complaintController = controller.getComplaintController(); // <-- You must expose this method in homepage
-                        if (complaintController != null) {
-                            complaintController.setUserEmail(userEmail); // ✅ Pass user ID to complaint controller
-                        }
+//                        Complaint complaintController = controller.getComplaintController(); // <-- You must expose this method in homepage
+//                        if (complaintController != null) {
+//                            complaintController.setUserEmail(userEmail); // ✅ Pass user ID to complaint controller
+//                        }
 
                     }
 
