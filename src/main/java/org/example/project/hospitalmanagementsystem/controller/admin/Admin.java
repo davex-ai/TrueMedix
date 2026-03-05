@@ -1,17 +1,16 @@
 package org.example.project.hospitalmanagementsystem.controller.admin;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import org.example.project.hospitalmanagementsystem.database.DatabaseConnection;
 
@@ -23,35 +22,94 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Admin Dashboard Controller.
+ *
+ * Navigation architecture:
+ *   All sidebar buttons inject their FXML view into the StackPane
+ *   {@code contentArea} that lives inside the fixed BorderPane center.
+ *   The sidebar and top-bar are never touched during navigation.
+ *
+ *   showDashboard() restores the inline ScrollPane (dashboardView)
+ *   that was declared directly in AdminDashboard.fxml, so the
+ *   dashboard does NOT need its own separate FXML file.
+ */
 public class Admin {
 
-    // ── Sidebar nav buttons ────────────────────────────────────────────────
+    // ── Sidebar buttons ────────────────────────────────────────────────────
     @FXML private VBox   sidebar;
     @FXML private Button btnDashboard;
     @FXML private Button btnPatients;
     @FXML private Button btnDoctors;
     @FXML private Button btnAppointments;
     @FXML private Button btnComplaints;
-    @FXML private Label pendingDoctorsLabel;
     @FXML private Button btnDepartments;
 
+    // ── Top-bar ────────────────────────────────────────────────────────────
+    @FXML private Label     pageTitleLabel;
+    @FXML private TextField globalSearchField;
+    @FXML private Label     notificationBadge;
     @FXML private Label     adminNameLabel;
     @FXML private Label     sidebarAdminName;
 
-    // ── Summary cards ──────────────────────────────────────────────────────
+    // ── Dynamic content area (StackPane — children are swapped per page) ───
+    @FXML private StackPane contentArea;
+
+    /**
+     * The dashboard home view declared inline in the FXML.
+     * Kept as a field so showDashboard() can restore it after
+     * a sub-page has replaced the contentArea children.
+     */
+    @FXML private ScrollPane dashboardView;
+
+    // ── Dashboard summary card labels ──────────────────────────────────────
     @FXML private Label patientCountLabel;
+    @FXML private Label patientTrendLabel;
     @FXML private Label appointmentCountLabel;
+    @FXML private Label appointmentTrendLabel;
     @FXML private Label doctorCountLabel;
+    @FXML private Label doctorTrendLabel;
     @FXML private Label deptCountLabel;
+    @FXML private Label deptTrendLabel;
+    @FXML private Label pendingDoctorsLabel;
 
     // ── Charts ─────────────────────────────────────────────────────────────
-    @FXML private BarChart<String, Number>  appointmentsBarChart;
-    @FXML private PieChart                  departmentPieChart;
+    @FXML private BarChart<String, Number> appointmentsBarChart;
+    @FXML private PieChart                 departmentPieChart;
+
+    // ── Recent appointments table ──────────────────────────────────────────
+    @FXML private TableView<RecentAppointment>            recentAppointmentsTable;
+    @FXML private TableColumn<RecentAppointment, Integer> colApptId;
+    @FXML private TableColumn<RecentAppointment, String>  colApptPatient;
+    @FXML private TableColumn<RecentAppointment, String>  colApptDoctor;
+    @FXML private TableColumn<RecentAppointment, String>  colApptDepartment;
+    @FXML private TableColumn<RecentAppointment, String>  colApptDate;
+    @FXML private TableColumn<RecentAppointment, String>  colApptStatus;
 
     // ─────────────────────────────────────────────────────────────────────
-    // Model for the recent-appointments table
+    // Data model for the recent-appointments table
     // ─────────────────────────────────────────────────────────────────────
+    public static class RecentAppointment {
+        private final int    id;
+        private final String patientName;
+        private final String doctorName;
+        private final String department;
+        private final String date;
+        private final String status;
 
+        public RecentAppointment(int id, String patientName, String doctorName,
+                                 String department, String date, String status) {
+            this.id = id; this.patientName = patientName;
+            this.doctorName = doctorName; this.department = department;
+            this.date = date; this.status = status;
+        }
+        public int    getId()          { return id; }
+        public String getPatientName() { return patientName; }
+        public String getDoctorName()  { return doctorName; }
+        public String getDepartment()  { return department; }
+        public String getDate()        { return date; }
+        public String getStatus()      { return status; }
+    }
 
     // ─────────────────────────────────────────────────────────────────────
     // Lifecycle
@@ -59,6 +117,7 @@ public class Admin {
     @FXML
     public void initialize() {
         setActiveButton(btnDashboard);
+//        bindTableColumns();
         loadDashboardData();
     }
 
@@ -69,7 +128,88 @@ public class Admin {
     }
 
     // ─────────────────────────────────────────────────────────────────────
-    // Data loading – ALL read from DB, NO hardcoded values
+    // ── CORE NAVIGATION METHOD ───────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────
+
+    /**
+     * Loads an FXML sub-page and places it as the sole child of
+     * {@code contentArea}.  The sidebar and top-bar are untouched.
+     *
+     * @param fxmlPath classpath-relative path e.g. "/fxml/admin/ManageDoctors.fxml"
+     */
+    private void loadPage(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent view = loader.load();
+            contentArea.getChildren().setAll(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────
+    // ── SIDEBAR NAVIGATION HANDLERS ──────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────
+
+    /** Restores the inline dashboard view — no new window, no new FXML load. */
+    @FXML
+    private void showDashboard() {
+        setActiveButton(btnDashboard);
+        pageTitleLabel.setText("Admin Dashboard");
+        // Restore the dashboardView node that was declared inline in the FXML
+        contentArea.getChildren().setAll(dashboardView);
+    }
+
+    @FXML
+    private void manageDoctors() {
+        setActiveButton(btnDoctors);
+        pageTitleLabel.setText("Doctors");
+        loadPage("/fxml/admin/ManageDoctors.fxml");
+    }
+
+    @FXML
+    private void managePatients() {
+        setActiveButton(btnPatients);
+        pageTitleLabel.setText("Patients");
+        loadPage("/fxml/admin/ManagePatients.fxml");
+    }
+
+    @FXML
+    private void viewAppointments() {
+        setActiveButton(btnAppointments);
+        pageTitleLabel.setText("Appointments");
+        loadPage("/fxml/admin/adminappointment.fxml");
+    }
+
+    @FXML
+    private void viewDepartments() {
+        setActiveButton(btnDepartments);
+        pageTitleLabel.setText("Departments");
+        loadPage("/fxml/admin/ManageDepartments.fxml");
+    }
+
+    @FXML
+    private void viewComplaints() {
+        setActiveButton(btnComplaints);
+        pageTitleLabel.setText("Complaints");
+        loadPage("/fxml/admin/admincomplaintview.fxml");
+    }
+
+    // ─────────────────────────────────────────────────────────────────────
+    // Sidebar active-state highlight
+    // ─────────────────────────────────────────────────────────────────────
+    private void setActiveButton(Button active) {
+        for (Button b : new Button[]{btnDashboard, btnPatients, btnDoctors,
+                btnAppointments, btnComplaints, btnDepartments}) {
+            b.getStyleClass().remove("sidebar-button-active");
+        }
+        if (!active.getStyleClass().contains("sidebar-button-active")) {
+            active.getStyleClass().add("sidebar-button-active");
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────
+    // Dashboard data loading
     // ─────────────────────────────────────────────────────────────────────
     private void loadDashboardData() {
         try (Connection conn = DatabaseConnection.getConnection()) {
@@ -77,47 +217,41 @@ public class Admin {
             loadAppointmentsBarChart(conn);
             loadTopPendingDoctor(conn);
             loadDepartmentPieChart(conn);
+//            loadRecentAppointmentsTable(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     private void loadSummaryCards(Connection conn) throws SQLException {
-        // --- Total patients ---
+        // Total patients
         try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(
-                     "SELECT COUNT(*) FROM users WHERE role = 'patient'")) {
+             ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM users WHERE role = 'patient'")) {
             if (rs.next()) patientCountLabel.setText(String.valueOf(rs.getInt(1)));
         }
 
-        // --- Today's appointments ---
+        // Today's appointments
         try (Statement s = conn.createStatement();
              ResultSet rs = s.executeQuery(
-                     "SELECT COUNT(*) " +
-                             "FROM appointments " +
+                     "SELECT COUNT(*) FROM appointments " +
                              "WHERE STR_TO_DATE(appointment_date, '%Y-%m-%d') = CURDATE()")) {
-
-            if (rs.next()) {
-                appointmentCountLabel.setText(String.valueOf(rs.getInt(1)));
-            }
+            if (rs.next()) appointmentCountLabel.setText(String.valueOf(rs.getInt(1)));
         }
 
-        // --- Active doctors ---
+        // Active doctors
         try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(
-                     "SELECT COUNT(*) FROM doctor WHERE status = 'ACTIVE'")) {
+             ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM doctor WHERE status = 'ACTIVE'")) {
             if (rs.next()) doctorCountLabel.setText(String.valueOf(rs.getInt(1)));
         }
 
+        // Total departments
         try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(
-                     "SELECT COUNT(*) FROM department_stats")) {
+             ResultSet rs = s.executeQuery("SELECT COUNT(*) FROM department_stats")) {
             if (rs.next()) deptCountLabel.setText(String.valueOf(rs.getInt(1)));
         }
     }
 
     private void loadAppointmentsBarChart(Connection conn) throws SQLException {
-        // Monthly appointment counts for the current year
         String sql =
                 "SELECT MONTH(appointment_date) AS m, COUNT(*) AS cnt " +
                         "FROM appointments " +
@@ -127,16 +261,15 @@ public class Admin {
         Map<String, Number> data = new LinkedHashMap<>();
         try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery(sql)) {
             while (rs.next()) {
-                String monthName = Month.of(rs.getInt("m"))
+                String month = Month.of(rs.getInt("m"))
                         .getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
-                data.put(monthName, rs.getInt("cnt"));
+                data.put(month, rs.getInt("cnt"));
             }
         }
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Appointments");
-        data.forEach((month, cnt) -> series.getData().add(
-                new XYChart.Data<>(month, cnt)));
+        data.forEach((m, cnt) -> series.getData().add(new XYChart.Data<>(m, cnt)));
 
         appointmentsBarChart.getData().clear();
         appointmentsBarChart.getData().add(series);
@@ -149,125 +282,89 @@ public class Admin {
                         "JOIN doctor d ON a.doctor_id = d.doctor_id " +
                         "WHERE a.status = 'Pending' " +
                         "GROUP BY d.doctor_id, d.name " +
-                        "ORDER BY cnt DESC " +
-                        "LIMIT 5";
+                        "ORDER BY cnt DESC LIMIT 5";
 
-        try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(sql)) {
-
-            StringBuilder topDoctors = new StringBuilder();
-            int count = 0;
-
-            while (rs.next() && count < 5) {
-                topDoctors.append(rs.getString("name"))
-                        .append(" (").append(rs.getInt("cnt")).append(")\n");
-                count++;
-            }
-
-            if (topDoctors.length() > 0) {
-                // Remove the last newline
-                topDoctors.setLength(topDoctors.length() - 1);
-                pendingDoctorsLabel.setText(topDoctors.toString());
-            } else {
-                pendingDoctorsLabel.setText("None 🎉");
+        StringBuilder sb = new StringBuilder();
+        try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery(sql)) {
+            while (rs.next()) {
+                sb.append(rs.getString("name"))
+                        .append("  (").append(rs.getInt("cnt")).append(")\n");
             }
         }
+        pendingDoctorsLabel.setText(sb.length() > 0
+                ? sb.toString().stripTrailing()
+                : "None 🎉");
     }
 
     private void loadDepartmentPieChart(Connection conn) throws SQLException {
-
         String sql =
                 "SELECT ds.department, COUNT(d.doctor_id) AS cnt " +
                         "FROM department_stats ds " +
                         "LEFT JOIN doctor d ON d.doctor_id = ds.id " +
-                        "GROUP BY ds.department " +
-                        "ORDER BY cnt DESC";
+                        "GROUP BY ds.department ORDER BY cnt DESC";
 
         ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
-
-        try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(sql)) {
-
+        try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery(sql)) {
             while (rs.next()) {
-                pieData.add(new PieChart.Data(
-                        rs.getString("department"),
-                        rs.getInt("cnt")
-                ));
+                pieData.add(new PieChart.Data(rs.getString("department"), rs.getInt("cnt")));
             }
         }
-
         departmentPieChart.setData(pieData);
     }
 
-
-
-    // ─────────────────────────────────────────────────────────────────────
-    // Sidebar navigation
-    // ─────────────────────────────────────────────────────────────────────
-    @FXML private void showDashboard()    { setActiveButton(btnDashboard);    /* already on dashboard */ }
-
-    @FXML private void manageDoctors() {
-        setActiveButton(btnDoctors);
-        openInNewWindow("/fxml/admin/ManageDoctors.fxml", "Manage Doctors");
-    }
-
-    @FXML private void managePatients(ActionEvent event) {
-        setActiveButton(btnPatients);
-        openInNewWindow("/fxml/admin/ManagePatients.fxml", "Manage Patients");
-    }
-
-    @FXML private void viewAppointments() {
-        setActiveButton(btnAppointments);
-        openInNewWindow("/fxml/admin/adminappointment.fxml", "Appointments");
-    }
-
-    @FXML private void viewDepartments(ActionEvent event) {
-        setActiveButton(btnDepartments);
-        openInNewWindow("/fxml/admin/ManageDepartments.fxml", "Departments");
-    }
-
-    @FXML private void viewComplaints() {
-        setActiveButton(btnComplaints);
-        openInNewWindow("/fxml/admin/admincomplaintview.fxml", "Complaints");
-    }
-
-    @FXML private void openNotifications() {
-        // TODO: open notification panel / popover
-    }
-
-    // ─────────────────────────────────────────────────────────────────────
-    // Helpers
-    // ─────────────────────────────────────────────────────────────────────
-
-    /** Highlight the chosen button and remove highlight from the others. */
-    private void setActiveButton(Button active) {
-        for (Button b : new Button[]{btnDashboard, btnPatients, btnDoctors,
-                btnAppointments, btnComplaints, btnDepartments}) {
-            b.getStyleClass().remove("sidebar-button-active");
-        }
-        if (!active.getStyleClass().contains("sidebar-button-active")) {
-            active.getStyleClass().add("sidebar-button-active");
-        }
-    }
-
-    /** Open a sub-page in a new window. */
-    private void openInNewWindow(String fxmlPath, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Helper called by the Departments sub-page if it needs a back-button
-     * reference to the parent pane (kept for backward compatibility with
-     * ManageDepartmentController#setParentPane).
-     */
-    public AnchorPane getContentPane() { return null; /* Not used in BorderPane layout */ }
+//    private void loadRecentAppointmentsTable(Connection conn) throws SQLException {
+//        String sql =
+//                "SELECT a.id, " +
+//                        "       u.name AS patient_name, " +
+//                        "       d.name AS doctor_name, " +
+//                        "       d.department, " +
+//                        "       a.appointment_date, " +
+//                        "       a.status " +
+//                        "FROM appointments a " +
+//                        "JOIN users  u ON a.patient_id = u.id " +
+//                        "JOIN doctor d ON a.doctor_id  = d.doctor_id " +
+//                        "ORDER BY a.appointment_date DESC LIMIT 20";
+//
+//        ObservableList<RecentAppointment> rows = FXCollections.observableArrayList();
+//        try (Statement s = conn.createStatement(); ResultSet rs = s.executeQuery(sql)) {
+//            while (rs.next()) {
+//                rows.add(new RecentAppointment(
+//                        rs.getInt("id"),
+//                        rs.getString("patient_name"),
+//                        rs.getString("doctor_name"),
+//                        rs.getString("department"),
+//                        rs.getString("appointment_date"),
+//                        rs.getString("status")));
+//            }
+//        }
+//        recentAppointmentsTable.setItems(rows);
+//    }
+//
+//    // ─────────────────────────────────────────────────────────────────────
+//    // Table column binding
+//    // ─────────────────────────────────────────────────────────────────────
+//    private void bindTableColumns() {
+//        colApptId        .setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getId()));
+//        colApptPatient   .setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getPatientName()));
+//        colApptDoctor    .setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDoctorName()));
+//        colApptDepartment.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDepartment()));
+//        colApptDate      .setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDate()));
+//        colApptStatus    .setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
+//
+//        // Colour-code Status cell
+//        colApptStatus.setCellFactory(col -> new TableCell<>() {
+//            @Override
+//            protected void updateItem(String status, boolean empty) {
+//                super.updateItem(status, empty);
+//                if (empty || status == null) { setText(null); setStyle(""); return; }
+//                setText(status);
+//                switch (status.toUpperCase()) {
+//                    case "CONFIRMED" -> setStyle("-fx-text-fill:#16a34a;-fx-font-weight:bold;");
+//                    case "PENDING"   -> setStyle("-fx-text-fill:#d97706;-fx-font-weight:bold;");
+//                    case "CANCELLED" -> setStyle("-fx-text-fill:#dc2626;-fx-font-weight:bold;");
+//                    default          -> setStyle("");
+//                }
+//            }
+//        });
+//    }
 }

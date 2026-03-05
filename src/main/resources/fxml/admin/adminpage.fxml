@@ -5,13 +5,32 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.*?>
 
+<!--
+    AdminDashboard.fxml
+    Architecture:
+        BorderPane
+         ├─ left   → Fixed Sidebar (VBox)
+         └─ center → Fixed top-bar (VBox)
+                          └─ StackPane fx:id="contentArea"
+                                  (sub-pages are injected here at runtime)
+
+    The dashboard home content is declared directly inside contentArea
+    as a named VBox (fx:id="dashboardView") so it's visible on first load
+    without a separate FXML file. When a sub-page loads it replaces the
+    children of contentArea; showDashboard() restores dashboardView.
+-->
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.Admin"
             prefWidth="1280" prefHeight="800"
             stylesheets="@../../css/admin-home.css">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LEFT SIDEBAR  (never replaced — sits outside contentArea)
+    ════════════════════════════════════════════════════════════════ -->
     <left>
         <VBox fx:id="sidebar" prefWidth="230" styleClass="sidebar" spacing="0">
 
+            <!-- Brand -->
             <VBox styleClass="sidebar-brand" alignment="CENTER">
                 <padding><Insets top="28" bottom="28" left="20" right="20"/></padding>
                 <Label text="⚕" styleClass="sidebar-logo"/>
@@ -22,127 +41,176 @@
             <Label text="MAIN MENU" styleClass="sidebar-section-label">
                 <padding><Insets top="16" bottom="8" left="24" right="0"/></padding>
             </Label>
-            <Button fx:id="btnDashboard"    text="⊞  Dashboard"       styleClass="sidebar-button,sidebar-button-active" onAction="#showDashboard"    maxWidth="Infinity"/>
-            <Button fx:id="btnPatients"     text="👥  Patients"         styleClass="sidebar-button"                       onAction="#managePatients"   maxWidth="Infinity"/>
-            <Button fx:id="btnDoctors"      text="🩺  Doctors"          styleClass="sidebar-button"                       onAction="#manageDoctors"    maxWidth="Infinity"/>
-            <Button fx:id="btnAppointments" text="📅  Appointments"     styleClass="sidebar-button"                       onAction="#viewAppointments" maxWidth="Infinity"/>
-            <Button fx:id="btnComplaints"   text="📋  Complaints"       styleClass="sidebar-button"                       onAction="#viewComplaints"   maxWidth="Infinity"/>
-            <Button fx:id="btnDepartments"  text="🏥  Departments"      styleClass="sidebar-button"                       onAction="#viewDepartments"  maxWidth="Infinity"/>
+
+            <!-- Nav Buttons -->
+            <Button fx:id="btnDashboard"    text="⊞  Dashboard"      styleClass="sidebar-button,sidebar-button-active" onAction="#showDashboard"    maxWidth="Infinity"/>
+            <Button fx:id="btnPatients"     text="👥  Patients"        styleClass="sidebar-button"                       onAction="#managePatients"   maxWidth="Infinity"/>
+            <Button fx:id="btnDoctors"      text="🩺  Doctors"         styleClass="sidebar-button"                       onAction="#manageDoctors"    maxWidth="Infinity"/>
+            <Button fx:id="btnAppointments" text="📅  Appointments"    styleClass="sidebar-button"                       onAction="#viewAppointments" maxWidth="Infinity"/>
+            <Button fx:id="btnComplaints"   text="📋  Complaints"      styleClass="sidebar-button"                       onAction="#viewComplaints"   maxWidth="Infinity"/>
+            <Button fx:id="btnDepartments"  text="🏥  Departments"     styleClass="sidebar-button"                       onAction="#viewDepartments"  maxWidth="Infinity"/>
 
             <Region VBox.vgrow="ALWAYS"/>
 
+            <!-- Admin profile strip -->
             <HBox styleClass="sidebar-profile" alignment="CENTER_LEFT" spacing="12">
                 <padding><Insets top="16" bottom="16" left="20" right="16"/></padding>
                 <Label text="👤" styleClass="sidebar-avatar"/>
                 <VBox spacing="2">
-                    <Label fx:id="sidebarAdminName" text="Admin"  styleClass="sidebar-profile-name"/>
-                    <Label text="Administrator"                    styleClass="sidebar-profile-role"/>
+                    <Label fx:id="sidebarAdminName" text="Admin" styleClass="sidebar-profile-name"/>
+                    <Label text="Administrator"                   styleClass="sidebar-profile-role"/>
                 </VBox>
             </HBox>
         </VBox>
     </left>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         CENTER  =  fixed top-bar  +  dynamic contentArea
+    ════════════════════════════════════════════════════════════════ -->
     <center>
         <VBox styleClass="main-area" spacing="0">
 
-
+            <!-- ── FIXED TOP HEADER BAR ───────────────────────────────── -->
             <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="16" prefHeight="64">
                 <padding><Insets top="0" bottom="0" left="32" right="28"/></padding>
 
                 <Label fx:id="pageTitleLabel" text="Admin Dashboard" styleClass="page-title"/>
                 <Region HBox.hgrow="ALWAYS"/>
 
+                <!-- Search -->
+                <HBox styleClass="search-box" alignment="CENTER_LEFT" spacing="8">
+                    <Label text="🔍" styleClass="search-icon"/>
+                    <TextField fx:id="globalSearchField"
+                               promptText="Search patients, doctors…"
+                               styleClass="search-field" prefWidth="230"/>
+                </HBox>
 
+                <!-- Notification bell -->
+                <StackPane styleClass="notif-wrapper">
+                    <Button fx:id="notificationButton" text="🔔" styleClass="icon-button"/>
+                    <Label  fx:id="notificationBadge"  text=""   styleClass="notif-badge"
+                            StackPane.alignment="TOP_RIGHT"/>
+                </StackPane>
+
+                <!-- Admin pill -->
                 <HBox styleClass="admin-pill" alignment="CENTER" spacing="10">
                     <Label text="👤" styleClass="admin-avatar-small"/>
                     <Label fx:id="adminNameLabel" text="Admin" styleClass="admin-name-label"/>
                 </HBox>
             </HBox>
 
+            <!-- ── DYNAMIC CONTENT AREA ───────────────────────────────── -->
+            <!--
+                StackPane fx:id="contentArea"
+                Sub-pages are injected here by Admin#loadPage().
+                The default child is the dashboard ScrollPane declared below.
+                showDashboard() calls contentArea.getChildren().setAll(dashboardView).
+            -->
+            <StackPane fx:id="contentArea" VBox.vgrow="ALWAYS" styleClass="content-area">
 
-            <ScrollPane fitToWidth="true" styleClass="content-scroll" VBox.vgrow="ALWAYS">
-                <VBox styleClass="content-body" spacing="28">
-                    <padding><Insets top="28" bottom="28" left="32" right="32"/></padding>
+                <!-- ══════════════════════════════════════════════════════
+                     DASHBOARD HOME VIEW
+                     fx:id="dashboardView" so the controller can restore
+                     it when the user clicks "Dashboard" in the sidebar.
+                ═══════════════════════════════════════════════════════════ -->
+                <ScrollPane fx:id="dashboardView"
+                            fitToWidth="true"
+                            styleClass="content-scroll">
+                    <VBox styleClass="content-body" spacing="28">
+                        <padding><Insets top="28" bottom="28" left="32" right="32"/></padding>
 
+                        <!-- ── SUMMARY CARDS ─────────────────────────── -->
+                        <GridPane hgap="20" vgap="20">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
+                            </columnConstraints>
 
-                    <GridPane hgap="20" vgap="20" alignment="CENTER">
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
-                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
-                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
-                            <ColumnConstraints hgrow="ALWAYS" percentWidth="25"/>
-                        </columnConstraints>
+                            <!-- Total Patients -->
+                            <VBox GridPane.columnIndex="0" styleClass="stat-card,card-blue" spacing="6">
+                                <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="👥" styleClass="card-icon"/>
+                                    <Label text="Total Patients" styleClass="card-title"/>
+                                </HBox>
+                                <Label fx:id="patientCountLabel" text="—" styleClass="card-value"/>
+                                <Label fx:id="patientTrendLabel" text=""  styleClass="card-trend"/>
+                            </VBox>
 
-                        <VBox GridPane.columnIndex="0" styleClass="stat-card,card-blue" spacing="6">
-                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <Label text="👥" styleClass="card-icon"/>
-                                <Label text="Total Patients" styleClass="card-title"/>
-                            </HBox>
-                            <Label fx:id="patientCountLabel"  text="—" styleClass="card-value"/>
-                            <Label fx:id="patientTrendLabel"  text=""  styleClass="card-trend"/>
-                        </VBox>
+                            <!-- Today's Appointments -->
+                            <VBox GridPane.columnIndex="1" styleClass="stat-card,card-teal" spacing="6">
+                                <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="📅" styleClass="card-icon"/>
+                                    <Label text="Today's Appointments" styleClass="card-title"/>
+                                </HBox>
+                                <Label fx:id="appointmentCountLabel" text="—" styleClass="card-value"/>
+                                <Label fx:id="appointmentTrendLabel" text=""  styleClass="card-trend"/>
+                            </VBox>
 
+                            <!-- Available Doctors -->
+                            <VBox GridPane.columnIndex="2" styleClass="stat-card,card-indigo" spacing="6">
+                                <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="🩺" styleClass="card-icon"/>
+                                    <Label text="Available Doctors" styleClass="card-title"/>
+                                </HBox>
+                                <Label fx:id="doctorCountLabel" text="—" styleClass="card-value"/>
+                                <Label fx:id="doctorTrendLabel" text=""  styleClass="card-trend"/>
+                            </VBox>
 
-                        <VBox GridPane.columnIndex="1" styleClass="stat-card,card-teal" spacing="6">
-                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <Label text="📅" styleClass="card-icon"/>
-                                <Label text="Today's Appointments" styleClass="card-title"/>
-                            </HBox>
-                            <Label fx:id="appointmentCountLabel"  text="—" styleClass="card-value"/>
-                            <Label fx:id="appointmentTrendLabel"  text=""  styleClass="card-trend"/>
-                        </VBox>
+                            <!-- Available Departments -->
+                            <VBox GridPane.columnIndex="3" styleClass="stat-card,card-emerald" spacing="6">
+                                <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="🏥" styleClass="card-icon"/>
+                                    <Label text="Departments" styleClass="card-title"/>
+                                </HBox>
+                                <Label fx:id="deptCountLabel" text="—" styleClass="card-value"/>
+                                <Label fx:id="deptTrendLabel" text=""  styleClass="card-trend"/>
+                            </VBox>
+                        </GridPane>
 
+                        <!-- ── CHARTS ROW ─────────────────────────────── -->
+                        <HBox spacing="20">
 
-                        <VBox GridPane.columnIndex="2" styleClass="stat-card,card-indigo" spacing="6">
-                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <Label text="🩺" styleClass="card-icon"/>
-                                <Label text="Available Doctors" styleClass="card-title"/>
-                            </HBox>
-                            <Label fx:id="doctorCountLabel"  text="—" styleClass="card-value"/>
-                            <Label fx:id="doctorTrendLabel"  text=""  styleClass="card-trend"/>
-                        </VBox>
+                            <!-- Appointments per Month (Bar) -->
+                            <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" spacing="10">
+                                <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
+                                <Label text="Appointments per Month" styleClass="section-title"/>
+                                <BarChart fx:id="appointmentsBarChart" styleClass="dash-chart"
+                                          prefHeight="230" legendVisible="false" animated="true">
+                                    <xAxis><CategoryAxis label="Month"/></xAxis>
+                                    <yAxis><NumberAxis label="Count"/></yAxis>
+                                </BarChart>
+                            </VBox>
 
-                        <VBox GridPane.columnIndex="3" styleClass="stat-card,card-indigo" spacing="6">
-                            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
-                                <Label text="🏬" styleClass="card-icon"/>
-                                <Label text="Available Departments" styleClass="card-title"/>
-                            </HBox>
-                            <Label fx:id="deptCountLabel"  text="—" styleClass="card-value"/>
-                            <Label fx:id="deptTrendLabel"  text=""  styleClass="card-trend"/>
-                        </VBox>
-                    </GridPane>
-                    <HBox spacing="20">
-                        <VBox styleClass="chart-card" HBox.hgrow="ALWAYS" spacing="10">
-                            <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
-                            <Label text="Appointments per Month" styleClass="section-title"/>
-                            <BarChart fx:id="appointmentsBarChart" styleClass="dash-chart"
-                                      prefHeight="230" legendVisible="false" animated="true">
-                                <xAxis><CategoryAxis label="Month"/></xAxis>
-                                <yAxis><NumberAxis label="Count"/></yAxis>
-                            </BarChart>
-                        </VBox>
+                            <!-- Doctors by Department (Pie) -->
+                            <VBox styleClass="chart-card" prefWidth="300" spacing="10">
+                                <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
+                                <Label text="Doctors by Department" styleClass="section-title"/>
+                                <PieChart fx:id="departmentPieChart" styleClass="dash-chart"
+                                          prefHeight="230" labelsVisible="true" animated="true"/>
+                            </VBox>
 
+                            <!-- Doctors with Pending Appointments -->
+                            <VBox styleClass="chart-card" prefWidth="280" spacing="10">
+                                <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
+                                <Label text="Pending Appointments" styleClass="section-title"/>
+                                <Label text="Top doctors by queue:" styleClass="card-trend"/>
+                                <Label fx:id="pendingDoctorsLabel" text="—" styleClass="pending-list"/>
+                            </VBox>
+                        </HBox>
 
-                        <VBox styleClass="chart-card" prefWidth="320" spacing="10">
+                    </VBox>
+                </ScrollPane>
+                <!-- end dashboardView -->
 
-                            <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
-                            <Label text="Doctors by Department" styleClass="section-title"/>
-                            <PieChart fx:id="departmentPieChart" styleClass="dash-chart"
-                                      prefHeight="230" labelsVisible="true" animated="true"/>
-                        </VBox>
-                        <VBox styleClass="chart-card" prefWidth="320" spacing="10">
-                            <padding><Insets top="20" bottom="16" left="20" right="20"/></padding>
+            </StackPane>
+            <!-- end contentArea -->
 
-                            <Label text="Doctors With Pending Appointment"  styleClass="section-title"/>
-                            <Label  fx:id="pendingDoctorsLabel" styleClass="section-title"/>
-                        </VBox>
-                    </HBox>
-                </VBox>
-<!--                // create card to show pendingDoctorsLabel-->
-            </ScrollPane>
         </VBox>
     </center>
 
