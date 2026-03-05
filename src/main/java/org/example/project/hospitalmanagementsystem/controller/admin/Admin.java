@@ -17,7 +17,6 @@ import org.example.project.hospitalmanagementsystem.database.DatabaseConnection;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.LinkedHashMap;
@@ -33,25 +32,17 @@ public class Admin {
     @FXML private Button btnDoctors;
     @FXML private Button btnAppointments;
     @FXML private Button btnComplaints;
+    @FXML private Label pendingDoctorsLabel;
     @FXML private Button btnDepartments;
 
-    // ── Header ─────────────────────────────────────────────────────────────
-    @FXML private Label     pageTitleLabel;
-    @FXML private TextField globalSearchField;
-    @FXML private Button    notificationButton;
-    @FXML private Label     notificationBadge;
     @FXML private Label     adminNameLabel;
     @FXML private Label     sidebarAdminName;
 
     // ── Summary cards ──────────────────────────────────────────────────────
     @FXML private Label patientCountLabel;
-    @FXML private Label patientTrendLabel;
     @FXML private Label appointmentCountLabel;
-    @FXML private Label appointmentTrendLabel;
     @FXML private Label doctorCountLabel;
-    @FXML private Label doctorTrendLabel;
-    @FXML private Label revenueLabel;
-    @FXML private Label revenueTrendLabel;
+    @FXML private Label deptCountLabel;
 
     // ── Charts ─────────────────────────────────────────────────────────────
     @FXML private BarChart<String, Number>  appointmentsBarChart;
@@ -84,6 +75,7 @@ public class Admin {
         try (Connection conn = DatabaseConnection.getConnection()) {
             loadSummaryCards(conn);
             loadAppointmentsBarChart(conn);
+            loadTopPendingDoctor(conn);
             loadDepartmentPieChart(conn);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,8 +93,13 @@ public class Admin {
         // --- Today's appointments ---
         try (Statement s = conn.createStatement();
              ResultSet rs = s.executeQuery(
-                     "SELECT COUNT(*) FROM appointments WHERE DATE(appointment_date) = CURDATE()")) {
-            if (rs.next()) appointmentCountLabel.setText(String.valueOf(rs.getInt(1)));
+                     "SELECT COUNT(*) " +
+                             "FROM appointments " +
+                             "WHERE STR_TO_DATE(appointment_date, '%Y-%m-%d') = CURDATE()")) {
+
+            if (rs.next()) {
+                appointmentCountLabel.setText(String.valueOf(rs.getInt(1)));
+            }
         }
 
         // --- Active doctors ---
@@ -110,6 +107,12 @@ public class Admin {
              ResultSet rs = s.executeQuery(
                      "SELECT COUNT(*) FROM doctor WHERE status = 'ACTIVE'")) {
             if (rs.next()) doctorCountLabel.setText(String.valueOf(rs.getInt(1)));
+        }
+
+        try (Statement s = conn.createStatement();
+             ResultSet rs = s.executeQuery(
+                     "SELECT COUNT(*) FROM department_stats")) {
+            if (rs.next()) deptCountLabel.setText(String.valueOf(rs.getInt(1)));
         }
     }
 
@@ -137,6 +140,38 @@ public class Admin {
 
         appointmentsBarChart.getData().clear();
         appointmentsBarChart.getData().add(series);
+    }
+
+    private void loadTopPendingDoctor(Connection conn) throws SQLException {
+        String sql =
+                "SELECT d.name, COUNT(*) AS cnt " +
+                        "FROM appointments a " +
+                        "JOIN doctor d ON a.doctor_id = d.doctor_id " +
+                        "WHERE a.status = 'Pending' " +
+                        "GROUP BY d.doctor_id, d.name " +
+                        "ORDER BY cnt DESC " +
+                        "LIMIT 5";
+
+        try (Statement s = conn.createStatement();
+             ResultSet rs = s.executeQuery(sql)) {
+
+            StringBuilder topDoctors = new StringBuilder();
+            int count = 0;
+
+            while (rs.next() && count < 5) {
+                topDoctors.append(rs.getString("name"))
+                        .append(" (").append(rs.getInt("cnt")).append(")\n");
+                count++;
+            }
+
+            if (topDoctors.length() > 0) {
+                // Remove the last newline
+                topDoctors.setLength(topDoctors.length() - 1);
+                pendingDoctorsLabel.setText(topDoctors.toString());
+            } else {
+                pendingDoctorsLabel.setText("None 🎉");
+            }
+        }
     }
 
     private void loadDepartmentPieChart(Connection conn) throws SQLException {

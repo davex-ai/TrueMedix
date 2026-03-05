@@ -21,10 +21,6 @@ public class Doctor {
     private String bio;
     private String history;
 
-
-
-
-
     public enum DoctorStatus {
         ACTIVE, ON_LEAVE, RETIRED
     }

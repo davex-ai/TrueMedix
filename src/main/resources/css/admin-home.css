@@ -262,27 +262,6 @@
     -fx-text-fill: -color-text-primary;
 }
 
-/* Search */
-.search-box {
-    -fx-background-color: -color-bg;
-    -fx-background-radius: 8px;
-    -fx-border-color: -color-border;
-    -fx-border-radius: 8px;
-    -fx-padding: 0 12 0 12;
-    -fx-pref-height: 38px;
-}
-
-.search-icon { -fx-font-size: 14px; -fx-text-fill: -color-text-muted; }
-
-.search-field {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-font-size: 13px;
-    -fx-text-fill: -color-text-primary;
-    -fx-prompt-text-fill: -color-text-muted;
-}
-.search-field:focused { -fx-border-color: transparent; }
-
 /* Notification bell */
 .notif-wrapper { -fx-pref-width: 38px; -fx-pref-height: 38px; }
 
@@ -295,18 +274,6 @@
     -fx-pref-width: 38px;
     -fx-pref-height: 38px;
     -fx-cursor: hand;
-}
-.icon-button:hover { -fx-background-color: #e0e7ef; }
-
-.notif-badge {
-    -fx-background-color: #ef4444;
-    -fx-text-fill: white;
-    -fx-font-size: 9px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 99px;
-    -fx-padding: 1 4 1 4;
-    -fx-translate-x: 6;
-    -fx-translate-y: -4;
 }
 
 /* Admin pill */
