@@ -77,21 +77,6 @@
                 <Label fx:id="pageTitleLabel" text="Admin Dashboard" styleClass="page-title"/>
                 <Region HBox.hgrow="ALWAYS"/>
 
-                <!-- Search -->
-                <HBox styleClass="search-box" alignment="CENTER_LEFT" spacing="8">
-                    <Label text="🔍" styleClass="search-icon"/>
-                    <TextField fx:id="globalSearchField"
-                               promptText="Search patients, doctors…"
-                               styleClass="search-field" prefWidth="230"/>
-                </HBox>
-
-                <!-- Notification bell -->
-                <StackPane styleClass="notif-wrapper">
-                    <Button fx:id="notificationButton" text="🔔" styleClass="icon-button"/>
-                    <Label  fx:id="notificationBadge"  text=""   styleClass="notif-badge"
-                            StackPane.alignment="TOP_RIGHT"/>
-                </StackPane>
-
                 <!-- Admin pill -->
                 <HBox styleClass="admin-pill" alignment="CENTER" spacing="10">
                     <Label text="👤" styleClass="admin-avatar-small"/>
@@ -99,20 +84,8 @@
                 </HBox>
             </HBox>
 
-            <!-- ── DYNAMIC CONTENT AREA ───────────────────────────────── -->
-            <!--
-                StackPane fx:id="contentArea"
-                Sub-pages are injected here by Admin#loadPage().
-                The default child is the dashboard ScrollPane declared below.
-                showDashboard() calls contentArea.getChildren().setAll(dashboardView).
-            -->
             <StackPane fx:id="contentArea" VBox.vgrow="ALWAYS" styleClass="content-area">
 
-                <!-- ══════════════════════════════════════════════════════
-                     DASHBOARD HOME VIEW
-                     fx:id="dashboardView" so the controller can restore
-                     it when the user clicks "Dashboard" in the sidebar.
-                ═══════════════════════════════════════════════════════════ -->
                 <ScrollPane fx:id="dashboardView"
                             fitToWidth="true"
                             styleClass="content-scroll">
