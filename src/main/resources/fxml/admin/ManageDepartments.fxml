@@ -1,44 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="parentPane" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.ManageDepartmentController">
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.ManageDepartmentController"
+            style="-fx-background-color: #f0f4f8;">
     <children>
+        <BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                    AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                    style="-fx-background-color: #f0f4f8;">
 
-<BorderPane  stylesheets="@../../css/forms.css" >
+            <top>
+                <VBox>
+                    <VBox style="-fx-background-color: #1a2e4a; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);">
+                        <padding><Insets top="18" right="30" bottom="18" left="30"/></padding>
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="3" HBox.hgrow="ALWAYS">
+                                <Label text="Manage Departments"
+                                       style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-font-family: 'Segoe UI';"/>
+                                <Label text="View, add, and manage hospital departments and their services."
+                                       style="-fx-font-size: 12px; -fx-text-fill: #90aac8; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <Button text="+ Add Department" onAction="#onAddDepartment"
+                                    style="-fx-background-color: #1e77d4; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 18 8 18; -fx-font-family: 'Segoe UI';"/>
+                        </HBox>
+                    </VBox>
 
-    <top>
-        <VBox spacing="10" ><padding><Insets top="15"/> </padding>
-            <HBox alignment="BOTTOM_RIGHT" >
-            </HBox>
-            <HBox spacing="10" >
-                <TextField fx:id="searchField"  onKeyReleased="#onSearch" promptText="Search departments..." HBox.hgrow="ALWAYS"/>
-                <ComboBox fx:id="filterCombo"  onAction="#onFilterChanged" prefWidth="150"/>
-                <Button text="Add Department" onAction="#onAddDepartment"/>
-                <Button text="← Back" onAction="#goBackToAdmin"/>
+                    <VBox style="-fx-background-color: #f0f4f8;">
+                        <padding><Insets top="20" right="28" bottom="0" left="28"/></padding>
 
-            </HBox>
+                        <HBox spacing="14" style="-fx-padding: 0 0 16 0;">
+                            <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Total Departments" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                                <Label fx:id="totalDepartmentsLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Active" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                                <Label fx:id="statActiveLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a7a45; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Inactive" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                                <Label fx:id="statInactiveLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #b03030; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Most Visited" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                                <Label fx:id="mostVisitedLabel" text="—" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1e77d4; -fx-font-family: 'Segoe UI';" wrapText="true"/>
+                            </VBox>
+                            <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Total Visits" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                                <Label fx:id="statTotalVisitsLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #5856d6; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Avail. Slots" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                                <Label fx:id="statSlotsLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #c47e0a; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                        </HBox>
 
-            <HBox spacing="20">
-                <Label fx:id="totalDepartmentsLabel" style="-fx-font-weight: bold;"/>
-                <Label fx:id="mostVisitedLabel" style="-fx-font-weight: bold;"/>
-                <Label fx:id="mostDoctorsLabel" style="-fx-font-weight: bold;"/>
+                        <HBox spacing="10" alignment="CENTER_LEFT"
+                              style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 12 16 12 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                            <TextField fx:id="searchField" onKeyReleased="#onSearch"
+                                       promptText="🔍  Search departments..."
+                                       prefWidth="280"
+                                       style="-fx-font-size: 13px; -fx-background-color: #f0f4f8; -fx-border-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12 8 12; -fx-font-family: 'Segoe UI';"/>
+                            <ComboBox fx:id="filterCombo" onAction="#onFilterChanged" prefWidth="150"
+                                      style="-fx-font-size: 13px; -fx-background-color: #f0f4f8; -fx-border-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-family: 'Segoe UI';"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label fx:id="resultsLabel" text=""
+                                   style="-fx-font-size: 12px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                            <Button text="✕ Reset" onAction="#onResetFilters"
+                                    style="-fx-background-color: #fde8e8; -fx-text-fill: #b03030; -fx-font-size: 12px; -fx-cursor: hand; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 6 14 6 14; -fx-font-family: 'Segoe UI';"/>
+                        </HBox>
 
+                        <Region prefHeight="14"/>
+                    </VBox>
+                </VBox>
+            </top>
 
-            </HBox>
-        </VBox>
-    </top>
+            <center>
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                    <VBox spacing="0">
+                        <padding><Insets top="4" right="28" bottom="0" left="28"/></padding>
 
-    <center>
-        <ScrollPane fitToWidth="true"><padding><Insets top="15"/> </padding>
-            <TilePane fx:id="departmentTilePane" hgap="15" vgap="15" prefTileWidth="255" />
-        </ScrollPane>
-    </center>
+                        <TilePane fx:id="departmentTilePane" hgap="16" vgap="16" prefTileWidth="270"
+                                  style="-fx-padding: 4 0 4 0;"/>
 
-</BorderPane>
+                        <Region prefHeight="28"/>
+
+                        <Label text="Analytics Overview"
+                               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI'; -fx-padding: 0 0 10 0;"/>
+
+                        <HBox spacing="16">
+                            <VBox spacing="6" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 16 18 16 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Visits per Department"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <BarChart fx:id="visitsChart" prefHeight="240" animated="false" legendVisible="false"
+                                          style="-fx-background-color: transparent;">
+                                    <xAxis><CategoryAxis fx:id="visitsChartX"/></xAxis>
+                                    <yAxis><NumberAxis fx:id="visitsChartY" label="Visits"/></yAxis>
+                                </BarChart>
+                            </VBox>
+                            <VBox spacing="6" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 16 18 16 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Available Slots per Department"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <BarChart fx:id="slotsChart" prefHeight="240" animated="false" legendVisible="false"
+                                          style="-fx-background-color: transparent;">
+                                    <xAxis><CategoryAxis fx:id="slotsChartX"/></xAxis>
+                                    <yAxis><NumberAxis fx:id="slotsChartY" label="Slots"/></yAxis>
+                                </BarChart>
+                            </VBox>
+                            <VBox spacing="6" HBox.hgrow="ALWAYS"
+                                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 16 18 16 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                                <Label text="Assigned Doctors per Department"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <BarChart fx:id="doctorsChart" prefHeight="240" animated="false" legendVisible="false"
+                                          style="-fx-background-color: transparent;">
+                                    <xAxis><CategoryAxis fx:id="doctorsChartX"/></xAxis>
+                                    <yAxis><NumberAxis fx:id="doctorsChartY" label="Doctors"/></yAxis>
+                                </BarChart>
+                            </VBox>
+                        </HBox>
+
+                        <Region prefHeight="24"/>
+                    </VBox>
+                </ScrollPane>
+            </center>
+
+        </BorderPane>
     </children>
 </AnchorPane>

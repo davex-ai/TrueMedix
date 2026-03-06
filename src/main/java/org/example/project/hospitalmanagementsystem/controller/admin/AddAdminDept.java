@@ -31,10 +31,6 @@ public class AddAdminDept {
     @FXML private ListView<String> servicesListView;
     @FXML private TextField serviceInputField;
 
-    @FXML private Button addDepartmentButton;  // This can be your Save button
-    @FXML private Button backButton;            // Add this button for Back
-
-
     private final DepartmentService departmentService = new DepartmentService();
     private DepartmentCard departmentController;
 
@@ -57,13 +53,6 @@ public class AddAdminDept {
         statusComboBox.setItems(FXCollections.observableArrayList("Active", "Closed"));
         loadDoctors();
     }
-
-    private DepartmentCard departmentUser;
-
-    public void setDepartmentUser(DepartmentCard departmentUser) {
-        this.departmentUser = departmentUser;
-    }
-
 
     private void loadDoctors() {
         List<Doctor> doctors = departmentService.getAllDoctorObjects();
@@ -97,7 +86,6 @@ public class AddAdminDept {
             showAlert("All fields must be filled correctly.");
             return;
         }
-
         List<Integer> doctorIds = departmentService.getDoctorIdsByNames(selectedDoctorNames);
 
         List<String> services = new ArrayList<>(servicesListView.getItems());
@@ -163,10 +151,3 @@ public class AddAdminDept {
         }
     }
 }
-
-
-// Note: The DepartmentService class should contain getAllDoctors(), saveDepartment(), and notifyFrontendToAddCard() methods.
-// The Department model should be updated to include doctor assignment.
-// The frontend (DepartmentController) should listen for the callback to add cards without needing a reload.
-
-
