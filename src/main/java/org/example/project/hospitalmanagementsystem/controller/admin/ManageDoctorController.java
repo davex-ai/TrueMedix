@@ -139,7 +139,8 @@ public class ManageDoctorController {
         long active   = doctors.stream().filter(d -> d.getStatus() == Doctor.DoctorStatus.ACTIVE).count();
         long onLeave  = doctors.stream().filter(d -> d.getStatus() == Doctor.DoctorStatus.ON_LEAVE).count();
         double avgSal = doctors.stream().mapToDouble(Doctor::getSalary).average().orElse(0);
-        long pending  = doctors.stream().mapToLong(Doctor::getPendingAppointmentsCount).sum();
+        long pending  = doctors.stream().mapToLong(d -> AppointmentDAO.getPendingCountByDoctorId(d.getId())).sum();
+        statPendingLabel.setText(String.valueOf(pending));
 
         statTotalLabel.setText(String.valueOf(total));
         statActiveLabel.setText(String.valueOf(active));
@@ -180,10 +181,14 @@ public class ManageDoctorController {
         series.setName("Pending Appointments");
 
         doctors.stream()
-                .sorted((a, b) -> Integer.compare(b.getPendingAppointmentsCount(), a.getPendingAppointmentsCount()))
+                .sorted((a, b) -> Long.compare(
+                        AppointmentDAO.getPendingCountByDoctorId(b.getId()),
+                        AppointmentDAO.getPendingCountByDoctorId(a.getId())))
                 .limit(10)
-                .forEach(d -> series.getData().add(
-                        new XYChart.Data<>(shortName(d.getName()), d.getPendingAppointmentsCount())));
+                .forEach(d -> {
+                    long pendingCount = AppointmentDAO.getPendingCountByDoctorId(d.getId());
+                    series.getData().add(new XYChart.Data<>(shortName(d.getName()), pendingCount));
+                });
 
         appointmentsChart.getData().add(series);
         styleBarChart(appointmentsChart, "#b03030");
@@ -232,20 +237,6 @@ public class ManageDoctorController {
             modal.initOwner(cardContainer.getScene().getWindow());
             modal.setOnHiding(e -> reload());
             modal.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void goBack() {
-        try {
-            Parent root = FXMLLoader.load(
-                    getClass().getResource("/fxml/admin/adminpage.fxml"));
-            Stage stage = (Stage) cardContainer.getScene().getWindow();
-            Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
-            stage.setScene(scene);
-            stage.setMaximized(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -21,6 +21,8 @@ public class Doctor {
     private String bio;
     private String history;
 
+
+
     public enum DoctorStatus {
         ACTIVE, ON_LEAVE, RETIRED
     }
@@ -46,6 +48,7 @@ public class Doctor {
     public String getName() { return name; }
 
     public void setName(String name) { this.name = name; }
+    public int getId() { return doctorId; }
 
     public LocalDate getEmploymentDate() { return employmentDate; }
 

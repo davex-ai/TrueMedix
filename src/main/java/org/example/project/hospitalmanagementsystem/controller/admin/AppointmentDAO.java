@@ -103,6 +103,19 @@ public class AppointmentDAO {
             return false;
         }
 
+    public static long getPendingCountByDoctorId(int doctorId) {
+        String sql = "SELECT COUNT(*) FROM appointments WHERE doctor_id=? AND status='Pending'";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, doctorId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getLong(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
 }
 
