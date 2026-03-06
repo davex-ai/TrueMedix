@@ -1,23 +1,20 @@
 package org.example.project.hospitalmanagementsystem.controller.users;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.example.project.hospitalmanagementsystem.model.Department;
 import org.example.project.hospitalmanagementsystem.controller.hospital.DepartmentService;
+import org.example.project.hospitalmanagementsystem.model.Department;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,67 +24,19 @@ import java.util.ResourceBundle;
 public class DepartmentCard implements Initializable {
 
     @FXML private TilePane departmentTilePane;
-//    @FXML private Label mostVisitedLabel;
-    @FXML private Label availableSlotsLabel;
-    @FXML private Button bookButton;
 
     private final DepartmentService departmentService = new DepartmentService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadDepartmentStats();
         loadDepartmentCards();
-    }
-
-    private void loadDepartmentStats() {
-        // Example placeholder stats; replace with real data from service
-//        mostVisitedLabel.setText("Cardiology, Neurology");
-        availableSlotsLabel.setText("23 slots available today");
     }
 
     private void loadDepartmentCards() {
         List<Department> departments = departmentService.getAllDepartments();
         departmentTilePane.getChildren().clear();
-
-        for (Department dept : departments) {
-            VBox card = createDepartmentCard(dept);
-            departmentTilePane.getChildren().add(card);
-        }
-    }
-
-    private VBox createDepartmentCard(Department department) {
-        VBox card = new VBox();
-        card.setPadding(new Insets(15));
-        card.setSpacing(10);
-        card.setPrefSize(280, 150);
-        card.getStyleClass().add("department-card");
-
-        Label title = new Label(department.getName());
-        title.setFont(new Font("Arial", 20));
-        title.setTextFill(Color.web("#1e1e1e"));
-
-        Label desc = new Label("Specialists available. Book now.");
-        desc.setWrapText(true);
-        desc.setFont(new Font("Arial", 14));
-        desc.setTextFill(Color.GRAY);
-
-        card.getChildren().addAll(title, desc);
-
-        // Hover effect
-        card.setOnMouseEntered(e -> {
-            card.setStyle("-fx-background-color: #e6f2ff; -fx-border-color: #3399ff; -fx-border-width: 1; -fx-border-radius: 10;");
-            card.setCursor(Cursor.HAND);
-        });
-
-        card.setOnMouseExited(e -> {
-            card.setStyle(null);
-            card.getStyleClass().add("department-card");
-        });
-
-        // On click: open department detail view
-        card.setOnMouseClicked(e -> openDepartmentView(department));
-
-        return card;
+        for (Department dept : departments)
+            departmentTilePane.getChildren().add(createDepartmentCard(dept));
     }
 
     public void addDepartmentCard(Department department) {
@@ -95,6 +44,46 @@ public class DepartmentCard implements Initializable {
         departmentTilePane.getChildren().add(card);
     }
 
+    private VBox createDepartmentCard(Department department) {
+        VBox card = new VBox(10);
+        card.setPadding(new Insets(18));
+        card.setPrefSize(270, 160);
+        card.setStyle(
+                "-fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12;" +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 3); -fx-cursor: hand;"
+        );
+
+        Label statusDot = new Label(department.isActive() ? "● Active" : "● Inactive");
+        statusDot.setStyle("-fx-font-size: 10px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"
+                + (department.isActive() ? "-fx-text-fill: #1a7a45;" : "-fx-text-fill: #b03030;"));
+
+        Label name = new Label(department.getName());
+        name.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';");
+        name.setWrapText(true);
+
+        Label desc = new Label(department.getDescription());
+        desc.setWrapText(true);
+        desc.setMaxHeight(36);
+        desc.setStyle("-fx-font-size: 12px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';");
+
+        Label meta = new Label("👨‍⚕️ " + department.getAssignedDoctorIds().size() + " doctors  🗓 " + department.getAvailableSlots() + " slots");
+        meta.setStyle("-fx-font-size: 11px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';");
+
+        card.getChildren().addAll(statusDot, name, desc, meta);
+
+        card.setOnMouseEntered(e -> card.setStyle(
+                "-fx-background-color: #eaf2fb; -fx-background-radius: 12; -fx-border-radius: 12;" +
+                        "-fx-border-color: #1a6fbd; -fx-border-width: 1.5;" +
+                        "-fx-effect: dropshadow(gaussian, rgba(26,111,189,0.18), 10, 0, 0, 4); -fx-cursor: hand;"
+        ));
+        card.setOnMouseExited(e -> card.setStyle(
+                "-fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12;" +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 3); -fx-cursor: hand;"
+        ));
+
+        card.setOnMouseClicked(e -> openDepartmentView(department));
+        return card;
+    }
 
     private void openDepartmentView(Department department) {
         try {
@@ -102,29 +91,19 @@ public class DepartmentCard implements Initializable {
             Parent root = loader.load();
 
             DepartmentView controller = loader.getController();
-            controller.setDepartment(department); // Inject the selected department
+            controller.setDepartment(department);
 
             Stage stage = (Stage) departmentTilePane.getScene().getWindow();
-            stage.setScene(new Scene(root, 1400, 800));
+            stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
             stage.setTitle(department.getName() + " Department");
             stage.setMaximized(true);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void handleBack(MouseEvent mouseEvent) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/user/Homepage.fxml"));
-            Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root, 1400, 800));
-            stage.centerOnScreen();
-            stage.setTitle("Trumedix - Home");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void handleBack(ActionEvent event) {
+        NavHelper.goHome((Node) event.getSource());
     }
-
 }
