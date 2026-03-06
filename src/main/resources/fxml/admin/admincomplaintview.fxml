@@ -1,36 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
+
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
 <?import javafx.geometry.Insets?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.AdminComplaintsController">
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.admin.AdminComplaintsController"
+            prefWidth="1200" prefHeight="860"
+            style="-fx-background-color: #f0f4f8;">
+
     <top>
-        <HBox spacing="10" >
-            <padding><Insets top="10"/> </padding>
-            <ComboBox fx:id="filterCategory" promptText="Filter by Category" />
-            <TextField fx:id="searchField" promptText="Search complaints..." onAction="#handleSearch"/>
-        </HBox>
+        <VBox>
+            <VBox style="-fx-background-color: #1a2e4a; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);">
+                <padding><Insets top="18" right="30" bottom="18" left="30"/></padding>
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <VBox spacing="3" HBox.hgrow="ALWAYS">
+                        <Label text="Manage Complaints"
+                               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-font-family: 'Segoe UI';"/>
+                        <Label text="Review, respond to, and resolve patient complaints."
+                               style="-fx-font-size: 12px; -fx-text-fill: #90aac8; -fx-font-family: 'Segoe UI';"/>
+                    </VBox>
+                    <Button text="↻ Refresh" onAction="#loadComplaints"
+                            style="-fx-background-color: rgba(255,255,255,0.10); -fx-text-fill: #cbd8e8; -fx-font-size: 13px; -fx-cursor: hand; -fx-border-color: rgba(255,255,255,0.18); -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 8 16 8 16; -fx-font-family: 'Segoe UI';"/>
+                </HBox>
+            </VBox>
+
+            <VBox style="-fx-background-color: #f0f4f8;">
+                <padding><Insets top="20" right="28" bottom="0" left="28"/></padding>
+
+                <HBox spacing="14" style="-fx-padding: 0 0 16 0;">
+                    <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                        <Label text="Total" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                        <Label fx:id="statTotalLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                        <Label text="Pending" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                        <Label fx:id="statPendingLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #c47e0a; -fx-font-family: 'Segoe UI';"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                        <Label text="Resolved" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                        <Label fx:id="statResolvedLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #1a7a45; -fx-font-family: 'Segoe UI';"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                        <Label text="High Urgency" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                        <Label fx:id="statHighUrgencyLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #b03030; -fx-font-family: 'Segoe UI';"/>
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="4" prefWidth="175"
+                          style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 14 18 14 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                        <Label text="Resolution Rate" style="-fx-font-size: 11px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                        <Label fx:id="statRateLabel" text="—" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #5856d6; -fx-font-family: 'Segoe UI';"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="10" alignment="CENTER_LEFT"
+                      style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 12 16 12 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                    <TextField fx:id="searchField" onKeyReleased="#handleSearch"
+                               promptText="🔍  Search by name, message, or category..."
+                               prefWidth="280"
+                               style="-fx-font-size: 13px; -fx-background-color: #f0f4f8; -fx-border-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 12 8 12; -fx-font-family: 'Segoe UI';"/>
+                    <ComboBox fx:id="filterCategory" promptText="Category ▾" prefWidth="150"
+                              style="-fx-font-size: 13px; -fx-background-color: #f0f4f8; -fx-border-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-family: 'Segoe UI';"/>
+                    <ComboBox fx:id="filterUrgency" promptText="Urgency ▾" prefWidth="130"
+                              style="-fx-font-size: 13px; -fx-background-color: #f0f4f8; -fx-border-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-family: 'Segoe UI';"/>
+                    <ComboBox fx:id="filterStatus" promptText="Status ▾" prefWidth="130"
+                              style="-fx-font-size: 13px; -fx-background-color: #f0f4f8; -fx-border-color: transparent; -fx-border-radius: 8; -fx-background-radius: 8; -fx-font-family: 'Segoe UI';"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="resultsLabel" text=""
+                           style="-fx-font-size: 12px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+                    <Button text="✕ Reset" onAction="#resetFilters"
+                            style="-fx-background-color: #fde8e8; -fx-text-fill: #b03030; -fx-font-size: 12px; -fx-cursor: hand; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 6 14 6 14; -fx-font-family: 'Segoe UI';"/>
+                </HBox>
+
+                <Region prefHeight="14"/>
+            </VBox>
+        </VBox>
     </top>
+
     <center>
-        <TableView fx:id="complaintTable">
-            <columns>
-                <TableColumn fx:id="nameColumn" text="Name"/>
-<!--                <TableColumn fx:id="emailColumn" text="Email"/>-->
-                <TableColumn fx:id="phoneColumn" text="Phone"/>
-                <TableColumn fx:id="categoryColumn" text="Category"/>
-                <TableColumn fx:id="urgencyColumn" text="Urgency"/>
-                <TableColumn fx:id="messageColumn" text="Complaint Summary"/>
-                <TableColumn fx:id="statusColumn" text="Status"/>
-                <TableColumn fx:id="submittedAtColumn" text="Submitted At"/>
-                <TableColumn fx:id="screenshotPathColumn" text="Screenshot"/>
-            </columns>
-        </TableView>
+        <VBox style="-fx-padding: 0 28 0 28;">
+            <TableView fx:id="complaintTable" VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: white; -fx-border-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2); -fx-font-family: 'Segoe UI'; -fx-font-size: 13px;">
+                <columns>
+                    <TableColumn fx:id="nameColumn"          text="Name"         prefWidth="130"/>
+                    <TableColumn fx:id="phoneColumn"         text="Phone"        prefWidth="110"/>
+                    <TableColumn fx:id="categoryColumn"      text="Category"     prefWidth="120"/>
+                    <TableColumn fx:id="urgencyColumn"       text="Urgency"      prefWidth="100"/>
+                    <TableColumn fx:id="messageColumn"       text="Summary"      prefWidth="220"/>
+                    <TableColumn fx:id="statusColumn"        text="Status"       prefWidth="110"/>
+                    <TableColumn fx:id="submittedAtColumn"   text="Submitted"    prefWidth="130"/>
+                    <TableColumn fx:id="screenshotPathColumn" text="Screenshot"  prefWidth="100"/>
+                    <TableColumn fx:id="actionsColumn"       text="Actions"      prefWidth="180"/>
+                </columns>
+                <placeholder>
+                    <Label text="No complaints found."
+                           style="-fx-font-size: 14px; -fx-text-fill: #9ab0c4; -fx-font-family: 'Segoe UI';"/>
+                </placeholder>
+            </TableView>
+        </VBox>
     </center>
+
     <bottom>
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <padding><Insets top="10"/> </padding>
-            <Button text="Respond" onAction="#handleRespond" />
-            <Button text="Delete" onAction="#handleDelete" />
-            <Button text="Refresh" onAction="#loadComplaints" />
-        </HBox>
+        <VBox spacing="0" style="-fx-padding: 14 28 0 28; -fx-background-color: #f0f4f8;">
+
+            <HBox spacing="10" alignment="CENTER_LEFT"
+                  style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 12 16 12 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                <Button text="💬 Respond to Selected" onAction="#handleRespond"
+                        style="-fx-background-color: #d4f5e2; -fx-text-fill: #1a7a45; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 18 8 18; -fx-font-family: 'Segoe UI';"/>
+                <Button text="🗑 Delete Selected" onAction="#handleDelete"
+                        style="-fx-background-color: #fde8e8; -fx-text-fill: #b03030; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 8 18 8 18; -fx-font-family: 'Segoe UI';"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="selectionInfoLabel" text="No row selected"
+                       style="-fx-font-size: 12px; -fx-text-fill: #7a8fa6; -fx-font-family: 'Segoe UI';"/>
+            </HBox>
+
+            <Region prefHeight="16"/>
+
+            <Label text="Analytics Overview"
+                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI'; -fx-padding: 0 0 10 0;"/>
+
+            <HBox spacing="16">
+                <VBox spacing="6" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 16 18 16 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                    <Label text="Complaints by Status"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                    <BarChart fx:id="statusChart" prefHeight="220" animated="false" legendVisible="false"
+                              style="-fx-background-color: transparent;">
+                        <xAxis><CategoryAxis fx:id="statusChartX"/></xAxis>
+                        <yAxis><NumberAxis fx:id="statusChartY" label="Count"/></yAxis>
+                    </BarChart>
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 16 18 16 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                    <Label text="Complaints by Category"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                    <BarChart fx:id="categoryChart" prefHeight="220" animated="false" legendVisible="false"
+                              style="-fx-background-color: transparent;">
+                        <xAxis><CategoryAxis fx:id="categoryChartX"/></xAxis>
+                        <yAxis><NumberAxis fx:id="categoryChartY" label="Count"/></yAxis>
+                    </BarChart>
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 16 18 16 18; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                    <Label text="Complaints by Urgency"
+                           style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                    <BarChart fx:id="urgencyChart" prefHeight="220" animated="false" legendVisible="false"
+                              style="-fx-background-color: transparent;">
+                        <xAxis><CategoryAxis fx:id="urgencyChartX"/></xAxis>
+                        <yAxis><NumberAxis fx:id="urgencyChartY" label="Count"/></yAxis>
+                    </BarChart>
+                </VBox>
+            </HBox>
+
+            <Region prefHeight="24"/>
+        </VBox>
     </bottom>
+
 </BorderPane>
