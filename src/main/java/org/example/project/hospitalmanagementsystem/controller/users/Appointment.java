@@ -4,8 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import org.example.project.hospitalmanagementsystem.controller.admin.AppointmentDAO;
 import org.example.project.hospitalmanagementsystem.database.DatabaseHandler;
 
@@ -34,12 +32,12 @@ public class Appointment {
                 "Cardiology", "Neurology", "Pediatrics",
                 "Dermatology", "Clinical(Check-ups)", "Maternity");
 
-        departmentDoctors.put("Cardiology",         List.of("Dr. Smith", "Dr. Adams Lincoln"));
-        departmentDoctors.put("Neurology",          List.of("Dr. Brown Antwi", "Dr. Lena Kwarteng"));
-        departmentDoctors.put("Pediatrics",         List.of("Dr. Samantha", "Dr. Viola Davis"));
-        departmentDoctors.put("Dermatology",        List.of("Dr. Rose", "Dr. Marcus Foley"));
-        departmentDoctors.put("Clinical(Check-ups)",List.of("Dr. Alice", "Dr. Bob"));
-        departmentDoctors.put("Maternity",          List.of("Dr. Stephanie", "Dr. Maxine Harding"));
+        departmentDoctors.put("Cardiology",          List.of("Dr. Smith", "Dr. Adams Lincoln"));
+        departmentDoctors.put("Neurology",           List.of("Dr. Brown Antwi", "Dr. Lena Kwarteng"));
+        departmentDoctors.put("Pediatrics",          List.of("Dr. Samantha", "Dr. Viola Davis"));
+        departmentDoctors.put("Dermatology",         List.of("Dr. Rose", "Dr. Marcus Foley"));
+        departmentDoctors.put("Clinical(Check-ups)", List.of("Dr. Alice", "Dr. Bob"));
+        departmentDoctors.put("Maternity",           List.of("Dr. Stephanie", "Dr. Maxine Harding"));
 
         departmentComboBox.getSelectionModel().selectedItemProperty()
                 .addListener((obs, o, n) -> handleDepartmentSelection());
@@ -49,8 +47,8 @@ public class Appointment {
                 "12:00 PM", "01:00 PM", "02:00 PM",
                 "03:00 PM", "04:00 PM", "05:00 PM");
 
-        errorLabel.setTextFill(Color.RED);
         errorLabel.setVisible(false);
+        errorLabel.setManaged(false);
 
         UserSession session = UserSession.getInstance();
         if (session.isLoggedIn()) {
@@ -80,34 +78,40 @@ public class Appointment {
         LocalDate localDate = datePicker.getValue();
 
         if (name.isEmpty() || email.isEmpty() || department == null || doctor == null || localDate == null || time == null) {
-            showError("Please fill out all fields.");
+            showFeedback("Please fill out all fields.", false);
             return;
         }
-        if (!isValidEmail(email)) { showError("Invalid email format."); return; }
+        if (!isValidEmail(email)) { showFeedback("Invalid email format.", false); return; }
 
-        Integer userId   = DatabaseHandler.getUserIdByEmail(email);
-        if (userId == null) { showError("User not registered."); return; }
+        Integer userId = DatabaseHandler.getUserIdByEmail(email);
+        if (userId == null) { showFeedback("No account found for this email.", false); return; }
 
         Integer doctorId = DatabaseHandler.getdoctorIdByName(doctor);
-        if (doctorId == null) { showError("Doctor doesn't exist."); return; }
+        if (doctorId == null) { showFeedback("Doctor not found in system.", false); return; }
 
         boolean success = AppointmentDAO.insertAppointment(
                 userId, doctorId, name, email, department, doctor,
                 Date.valueOf(localDate), time, notesArea.getText().trim());
 
         if (success) {
-            showError("Appointment booked successfully.", Color.GREEN);
+            showFeedback("✓  Appointment booked! A confirmation will be sent to your email.", true);
             clearForm();
         } else {
-            showError("Failed to book appointment. Try again.");
+            showFeedback("Failed to book appointment. Please try again.", false);
         }
     }
 
-    private void showError(String msg)              { showError(msg, Color.RED); }
-    private void showError(String msg, Color color) {
-        errorLabel.setTextFill(color);
-        errorLabel.setText(msg);
+    private void showFeedback(String message, boolean success) {
+        errorLabel.setText(message);
+        errorLabel.setStyle(
+                "-fx-font-size: 13px; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;"
+                        + "-fx-padding: 10 14 10 14; -fx-background-radius: 8; -fx-border-radius: 8;"
+                        + (success
+                        ? "-fx-background-color: #d4f5e2; -fx-text-fill: #1a7a45;"
+                        : "-fx-background-color: #fde8e8; -fx-text-fill: #b03030;")
+        );
         errorLabel.setVisible(true);
+        errorLabel.setManaged(true);
     }
 
     private void clearForm() {

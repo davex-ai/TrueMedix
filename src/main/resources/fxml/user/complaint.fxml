@@ -1,75 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.collections.FXCollections?>
-
 <?import java.lang.String?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.project.hospitalmanagementsystem.controller.users.Complaint"
-      spacing="15"
-      alignment="CENTER"
-       style="-fx-background-color: linear-gradient(to bottom right, #e3f2fd, #bbdefb);">
 
-  <Label text="Submit a Complaint"
-         style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #333;" />
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.project.hospitalmanagementsystem.controller.users.Complaint"
+            prefWidth="1200" prefHeight="820"
+            style="-fx-background-color: #f4f7fb;">
+  <top>
+    <VBox style="-fx-background-color: linear-gradient(to right, #1a6fbd, #2aa4d5);
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 8, 0, 0, 2);">
+      <padding><Insets top="22" right="36" bottom="22" left="36"/></padding>
+      <HBox alignment="CENTER_LEFT" spacing="14">
+        <VBox spacing="3" HBox.hgrow="ALWAYS">
+          <Label text="Submit a Complaint"
+                 style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Segoe UI';"/>
+          <Label text="We take every concern seriously. Fill in the details below."
+                 style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.72); -fx-font-family: 'Segoe UI';"/>
+        </VBox>
+        <Button text="← Back" onMouseClicked="#handleBack"
+                style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white;
+                               -fx-font-size: 13px; -fx-cursor: hand; -fx-border-color: rgba(255,255,255,0.30);
+                               -fx-border-radius: 6; -fx-background-radius: 6;
+                               -fx-padding: 9 18 9 18; -fx-font-family: 'Segoe UI';"/>
+      </HBox>
+    </VBox>
+  </top>
 
-  <TextField fx:id="nameField"
-             promptText="Name"
-             maxWidth="300"
-             style="-fx-font-size: 14px;"/>
+  <center>
+    <ScrollPane fitToWidth="true"
+                style="-fx-background-color: transparent; -fx-border-color: transparent;">
+      <VBox alignment="TOP_CENTER">
+        <padding><Insets top="36" right="36" bottom="36" left="36"/></padding>
 
-  <ComboBox fx:id="categoryCombo"
-            promptText="Select Category"
-            maxWidth="300"
-            style="-fx-font-size: 14px;">
-    <items>
-      <FXCollections fx:factory="observableArrayList">
-        <String fx:value="Appointments" />
-        <String fx:value="Health Issues" />
-        <String fx:value="Doctor Behavior" />
-        <String fx:value="Facility Problems" />
-        <String fx:value="Billing" />
-        <String fx:value="Other" />
-      </FXCollections>
-    </items>
-  </ComboBox>
+        <HBox spacing="24" maxWidth="1000" alignment="TOP_CENTER">
+          <VBox spacing="18" HBox.hgrow="ALWAYS"
+                style="-fx-background-color: white; -fx-background-radius: 14;
+                                 -fx-padding: 28; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 3);">
 
-  <Label text="Describe your issue" style="-fx-font-size: 14px; -fx-text-fill: #555;"/>
-  <TextArea fx:id="messageArea"
-            promptText="Your detailed complaint"
-            prefRowCount="4"
-            maxWidth="800"
-            style="-fx-font-size: 14px;" />
+            <Label text="Complaint Details"
+                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
 
-  <ComboBox fx:id="urgencyCombo"
-            promptText="Select Urgency"
-            maxWidth="300"
-            style="-fx-font-size: 14px;">
-    <items>
-      <FXCollections fx:factory="observableArrayList">
-        <String fx:value="Low" />
-        <String fx:value="Medium" />
-        <String fx:value="High" />
-      </FXCollections>
-    </items>
-  </ComboBox>
+            <VBox spacing="5">
+              <Label text="Full Name"
+                     style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+              <TextField fx:id="nameField" promptText="Enter your full name"
+                         style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                              -fx-background-radius: 8; -fx-border-radius: 8;
+                                              -fx-padding: 10 14 10 14; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+            </VBox>
 
-  <TextField fx:id="phoneField"
-             promptText="Phone Number"
-             maxWidth="300"
-             style="-fx-font-size: 14px;"/>
+            <VBox spacing="5">
+              <Label text="Phone Number"
+                     style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+              <TextField fx:id="phoneField" promptText="e.g. +233 20 000 0000"
+                         style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                              -fx-background-radius: 8; -fx-border-radius: 8;
+                                              -fx-padding: 10 14 10 14; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+            </VBox>
+            <HBox spacing="14">
+              <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Category"
+                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                <ComboBox fx:id="categoryCombo" promptText="Select category" maxWidth="Infinity">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Appointments"/>
+                      <String fx:value="Health Issues"/>
+                      <String fx:value="Doctor Behavior"/>
+                      <String fx:value="Facility Problems"/>
+                      <String fx:value="Billing"/>
+                      <String fx:value="Other"/>
+                    </FXCollections>
+                  </items>
+                </ComboBox>
+              </VBox>
+              <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Urgency"
+                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                <ComboBox fx:id="urgencyCombo" promptText="Select urgency" maxWidth="Infinity">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Low"/>
+                      <String fx:value="Medium"/>
+                      <String fx:value="High"/>
+                    </FXCollections>
+                  </items>
+                </ComboBox>
+              </VBox>
+            </HBox>
 
-  <HBox spacing="10" alignment="CENTER">
-    <Button text="Upload Screenshot (Optional)"
-            onAction="#handleUpload"
-            style="-fx-background-color: #eeeeee; -fx-border-radius: 5; -fx-background-radius: 5;"/>
-    <Label fx:id="screenshotLabel" text="No file selected" style="-fx-text-fill: #777;" />
-  </HBox>
+            <VBox spacing="5">
+              <Label text="Describe Your Issue"
+                     style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+              <TextArea fx:id="messageArea" promptText="Provide as much detail as possible…"
+                        prefRowCount="6" wrapText="true"
+                        style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                             -fx-background-radius: 8; -fx-border-radius: 8;
+                                             -fx-padding: 10 14 10 14; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+            </VBox>
+            <VBox spacing="5">
+              <Label text="Attachment (Optional)"
+                     style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+              <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button text="📎  Upload Screenshot" onAction="#handleUpload"
+                        style="-fx-background-color: #f0f4f8; -fx-text-fill: #3d5a73;
+                                               -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand;
+                                               -fx-border-radius: 8; -fx-background-radius: 8;
+                                               -fx-padding: 9 16 9 16; -fx-font-family: 'Segoe UI';"/>
+                <Label fx:id="screenshotLabel" text="No file selected"
+                       style="-fx-font-size: 12px; -fx-text-fill: #9ab0c4; -fx-font-family: 'Segoe UI';"/>
+              </HBox>
+            </VBox>
 
-  <HBox  alignment="BOTTOM_CENTER" spacing="10" >
-    <Button text="Submit Complaint" onAction="#handleSubmit"  style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 8 20 8 20; -fx-border-radius: 5; -fx-background-radius: 5;"/>
-    <Button text="Back" onMouseClicked="#handleBack"  style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 8 20 8 20; -fx-border-radius: 5; -fx-background-radius: 5;"/>
-  </HBox>
+            <Button text="Submit Complaint" onAction="#handleSubmit" maxWidth="Infinity"
+                    style="-fx-background-color: #1a6fbd; -fx-text-fill: white;
+                                       -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;
+                                       -fx-border-radius: 10; -fx-background-radius: 10;
+                                       -fx-padding: 13 20 13 20; -fx-font-family: 'Segoe UI';"/>
 
-</VBox>
+            <Label fx:id="feedbackLabel" text="" wrapText="true"
+                   style="-fx-font-size: 13px; -fx-font-family: 'Segoe UI';" visible="false" managed="false"/>
+          </VBox>
+          <VBox spacing="16" prefWidth="280">
+
+            <VBox spacing="12"
+                  style="-fx-background-color: white; -fx-background-radius: 14;
+                                     -fx-padding: 22; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 3);">
+              <Label text="What happens next?"
+                     style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+              <Label text="1.  We review your complaint within 24 hours." wrapText="true"
+                     style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+              <Label text="2.  Our team contacts you via phone or email." wrapText="true"
+                     style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+              <Label text="3.  Resolution updates are sent to your inbox." wrapText="true"
+                     style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+            </VBox>
+
+            <VBox spacing="10"
+                  style="-fx-background-color: #fef6e4; -fx-background-radius: 14;
+                                     -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);">
+              <Label text="⚠️  Urgency Guide"
+                     style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #c47e0a; -fx-font-family: 'Segoe UI';"/>
+              <Label text="High — Immediate health or safety risk." wrapText="true"
+                     style="-fx-font-size: 12px; -fx-text-fill: #8a5700; -fx-font-family: 'Segoe UI';"/>
+              <Label text="Medium — Ongoing issue affecting your care." wrapText="true"
+                     style="-fx-font-size: 12px; -fx-text-fill: #8a5700; -fx-font-family: 'Segoe UI';"/>
+              <Label text="Low — General feedback or minor concern." wrapText="true"
+                     style="-fx-font-size: 12px; -fx-text-fill: #8a5700; -fx-font-family: 'Segoe UI';"/>
+            </VBox>
+
+            <VBox spacing="10"
+                  style="-fx-background-color: white; -fx-background-radius: 14;
+                                     -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+              <Label text="Need immediate help?"
+                     style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+              <Label text="Call our 24/7 support line:" wrapText="true"
+                     style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+              <Label text="0800 - TRUMEDIX"
+                     style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a6fbd; -fx-font-family: 'Segoe UI';"/>
+            </VBox>
+
+          </VBox>
+        </HBox>
+      </VBox>
+    </ScrollPane>
+  </center>
+
+</BorderPane>

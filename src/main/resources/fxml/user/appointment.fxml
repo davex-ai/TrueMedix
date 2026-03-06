@@ -1,79 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="org.example.project.hospitalmanagementsystem.controller.users.Appointment"
-            prefWidth="800" prefHeight="600"
-            stylesheets="@../../css/appointment.css">
-
-    <VBox alignment="TOP_CENTER" spacing="20"
-          AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="40" AnchorPane.bottomAnchor="60" >
-        <padding>
-            <Insets top="20"/>
-        </padding>
-
-        <Label text="Book Appointment" styleClass="header-label"/>
-
-        <GridPane hgap="20" vgap="15">
-            <columnConstraints>
-                <ColumnConstraints percentWidth="30"/>
-                <ColumnConstraints percentWidth="70"/>
-            </columnConstraints>
-
-            <!-- Full Name -->
-            <Label text="Full Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="nameField" promptText="Enter your full name"
-                       GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-            <!-- Email -->
-            <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <TextField fx:id="emailField" promptText="example@email.com"
-                       GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-            <!-- Department -->
-            <Label text="Department:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="departmentComboBox" styleClass="combo-box"
-                      promptText="Select a department"
-                      onAction="#handleDepartmentSelection"
-                      GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-            <!-- Doctor -->
-            <Label text="Doctor:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="doctorComboBox" styleClass="combo-box"
-                      promptText="Select doctor"
-                      GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-            <!-- Time -->
-            <Label text="Select Time:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="timeComboBox" styleClass="combo-box"
-                      promptText="Choose Time"
-                      GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-            <!-- Preferred Date -->
-            <Label text="Preferred Date:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="datePicker" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-            <Label text="Note: Preferred date and Doctors are subject to availability. We will confirm necessary via email or notification" style="-fx-font-style: italic;" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-
-            <!-- Notes -->
-            <Label text="Symptoms / Notes:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-            <TextArea fx:id="notesArea" promptText="Describe your symptoms..." prefRowCount="3"
-                      GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-            <!-- Error Message -->
-            <Label fx:id="errorLabel" text="" visible="false"
-                   styleClass="error-label"
-                   GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-
-
-            <!-- Buttons -->
-            <HBox spacing="10" alignment="CENTER_RIGHT" GridPane.rowIndex="9" GridPane.columnIndex="1">
-                <Button text="Back" onAction="#handleBackToHome"/>
-                <Button text="Submit Appointment" onAction="#handleSubmit"/>
+            prefWidth="1200" prefHeight="820"
+            style="-fx-background-color: #f4f7fb;">
+    <top>
+        <VBox style="-fx-background-color: linear-gradient(to right, #1a6fbd, #2aa4d5);
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 8, 0, 0, 2);">
+            <padding><Insets top="22" right="36" bottom="22" left="36"/></padding>
+            <HBox alignment="CENTER_LEFT" spacing="14">
+                <VBox spacing="3" HBox.hgrow="ALWAYS">
+                    <Label text="Book an Appointment"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white; -fx-font-family: 'Segoe UI';"/>
+                    <Label text="Choose your department, doctor, and preferred time slot."
+                           style="-fx-font-size: 13px; -fx-text-fill: rgba(255,255,255,0.72); -fx-font-family: 'Segoe UI';"/>
+                </VBox>
+                <Button text="← Back" onAction="#handleBackToHome"
+                        style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white;
+                               -fx-font-size: 13px; -fx-cursor: hand; -fx-border-color: rgba(255,255,255,0.30);
+                               -fx-border-radius: 6; -fx-background-radius: 6;
+                               -fx-padding: 9 18 9 18; -fx-font-family: 'Segoe UI';"/>
             </HBox>
-        </GridPane>
-    </VBox>
-</AnchorPane>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <VBox alignment="TOP_CENTER">
+                <padding><Insets top="36" right="36" bottom="36" left="36"/></padding>
+
+                <HBox spacing="24" maxWidth="1000" alignment="TOP_CENTER">
+
+
+                    <VBox spacing="18" HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white; -fx-background-radius: 14;
+                                 -fx-padding: 28; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 3);">
+
+                        <Label text="Patient &amp; Appointment Info"
+                               style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+
+                        <HBox spacing="14">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Full Name"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <TextField fx:id="nameField" promptText="Enter your full name"
+                                           style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                                  -fx-background-radius: 8; -fx-padding: 10 14 10 14;
+                                                  -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Email Address"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <TextField fx:id="emailField" promptText="example@email.com"
+                                           style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                                  -fx-background-radius: 8; -fx-padding: 10 14 10 14;
+                                                  -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="14">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Department"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <ComboBox fx:id="departmentComboBox" promptText="Select department"
+                                          onAction="#handleDepartmentSelection" maxWidth="Infinity"
+                                          style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                                 -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Doctor"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <ComboBox fx:id="doctorComboBox" promptText="Select doctor" maxWidth="Infinity"
+                                          style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                                 -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox spacing="14">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Preferred Date"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <DatePicker fx:id="datePicker" maxWidth="Infinity"
+                                            style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                                   -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label text="Time Slot"
+                                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                                <ComboBox fx:id="timeComboBox" promptText="Choose time" maxWidth="Infinity"
+                                          style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                                 -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+                            </VBox>
+                        </HBox>
+
+                        <VBox spacing="5">
+                            <Label text="Symptoms / Notes"
+                                   style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                            <TextArea fx:id="notesArea" promptText="Describe your symptoms or any relevant notes…"
+                                      prefRowCount="4" wrapText="true"
+                                      style="-fx-background-color: #f4f7fb; -fx-border-color: transparent;
+                                             -fx-background-radius: 8; -fx-padding: 10 14 10 14;
+                                             -fx-font-size: 13px; -fx-font-family: 'Segoe UI';"/>
+                        </VBox>
+
+                        <Label fx:id="errorLabel" text="" wrapText="true"
+                               style="-fx-font-size: 13px; -fx-font-family: 'Segoe UI';" visible="false" managed="false"/>
+
+
+                        <Button text="Confirm Booking" onAction="#handleSubmit" maxWidth="Infinity"
+                                style="-fx-background-color: #1a6fbd; -fx-text-fill: white;
+                                       -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;
+                                       -fx-border-radius: 10; -fx-background-radius: 10;
+                                       -fx-padding: 13 20 13 20; -fx-font-family: 'Segoe UI';"/>
+                    </VBox>
+
+                    <VBox spacing="16" prefWidth="280">
+
+                        <VBox spacing="12"
+                              style="-fx-background-color: white; -fx-background-radius: 14;
+                                     -fx-padding: 22; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                            <Label text="📋  Booking Policy"
+                                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="• Appointments are subject to doctor availability." wrapText="true"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="• A confirmation will be sent to your email." wrapText="true"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="• Please arrive 15 minutes before your slot." wrapText="true"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="• To cancel, contact reception 24 hours prior." wrapText="true"
+                                   style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                        </VBox>
+
+                        <VBox spacing="10"
+                              style="-fx-background-color: #eaf6ef; -fx-background-radius: 14;
+                                     -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);">
+                            <Label text="🕐  Available Hours"
+                                   style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #1a7a45; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="Monday – Friday" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="9:00 AM – 5:00 PM" style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="Saturday" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="9:00 AM – 1:00 PM" style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="Sunday — Closed" style="-fx-font-size: 12px; -fx-text-fill: #b03030; -fx-font-family: 'Segoe UI';"/>
+                        </VBox>
+
+                        <VBox spacing="10"
+                              style="-fx-background-color: white; -fx-background-radius: 14;
+                                     -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 6, 0, 0, 2);">
+                            <Label text="Need help?"
+                                   style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #1a2e4a; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="Call reception:" style="-fx-font-size: 12px; -fx-text-fill: #3d5a73; -fx-font-family: 'Segoe UI';"/>
+                            <Label text="0800 - TRUMEDIX"
+                                   style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a6fbd; -fx-font-family: 'Segoe UI';"/>
+                        </VBox>
+
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
