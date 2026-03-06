@@ -67,7 +67,7 @@ public class AddAdminDept {
     public void setDepartmentController(DepartmentCard controller, Department dept) {
         this.departmentController = controller;
         if (dept != null) {
-            this.departmentController.addDepartmentCard((dept)); //line 81
+            this.departmentController.addDepartmentCard((dept));
         } else {
             System.out.println("No department yet, skipping DepartmentModel creation.");
         }
