@@ -22,13 +22,8 @@ public class EditPatientController {
     @FXML private ComboBox<String> statusCombo;
     @FXML private Label      errorLabel;
 
-    // The patient being edited and a callback to notify the parent table
     private ManagePatientsController.Patient patient;
     private Runnable onSaveCallback;
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    //  Init
-    // ═══════════════════════════════════════════════════════════════════════════
 
     @FXML
     public void initialize() {
@@ -36,8 +31,6 @@ public class EditPatientController {
         statusCombo.setItems(FXCollections.observableArrayList("Active", "Inactive"));
         errorLabel.setText("");
     }
-
-    // ─── Called by ManagePatientsController right after loading the FXML ──────
 
     public void setPatient(ManagePatientsController.Patient p) {
         this.patient = p;
@@ -47,8 +40,6 @@ public class EditPatientController {
         genderCombo.setValue(p.getGender());
         addressArea.setText(p.getAddress());
         statusCombo.setValue(p.getStatus());
-
-        // Parse DOB string → LocalDate for the DatePicker
         try {
             dobPicker.setValue(LocalDate.parse(p.getDob()));
         } catch (DateTimeParseException ex) {
@@ -56,20 +47,13 @@ public class EditPatientController {
         }
     }
 
-    /** Optional: receive a Runnable that refreshes the parent table after save. */
     public void setOnSaveCallback(Runnable callback) {
         this.onSaveCallback = callback;
     }
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    //  Button Handlers
-    // ═══════════════════════════════════════════════════════════════════════════
-
     @FXML
     private void onSave() {
         errorLabel.setText("");
-
-        // ── Validation ──────────────────────────────────────────────────────
         String name    = nameField.getText().trim();
         String email   = emailField.getText().trim();
         String gender  = genderCombo.getValue();
@@ -83,7 +67,7 @@ public class EditPatientController {
         if (dob == null)     { errorLabel.setText("Please select a date of birth."); return; }
         if (status == null)  { errorLabel.setText("Please select a status."); return; }
 
-        // ── Persist to DB ───────────────────────────────────────────────────
+
         String sql = """
                 UPDATE users
                 SET name = ?, email = ?, gender = ?, birth_date = ?, address = ?
@@ -107,15 +91,12 @@ public class EditPatientController {
             return;
         }
 
-        // ── Update the in-memory Patient object so the table refreshes live ─
         patient.nameProperty().set(name);
         patient.emailProperty().set(email);
         patient.genderProperty().set(gender);
         patient.dobProperty().set(dob.toString());
         patient.addressProperty().set(address);
         patient.setStatus(status);
-
-        // ── Notify parent (optional extra refresh) ──────────────────────────
         if (onSaveCallback != null) onSaveCallback.run();
 
         closeWindow();
@@ -125,10 +106,6 @@ public class EditPatientController {
     private void onCancel() {
         closeWindow();
     }
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    //  Utility
-    // ═══════════════════════════════════════════════════════════════════════════
 
     private void closeWindow() {
         Stage stage = (Stage) nameField.getScene().getWindow();

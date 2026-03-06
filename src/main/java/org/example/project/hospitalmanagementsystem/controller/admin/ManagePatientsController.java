@@ -25,7 +25,7 @@ import java.util.Optional;
 
 public class ManagePatientsController {
 
-    // ─── FXML Bindings ─────────────────────────────────────────────────────────
+
 
     @FXML private TextField searchField;
     @FXML private ComboBox<String> genderFilter;
@@ -47,15 +47,12 @@ public class ManagePatientsController {
     @FXML private Label paginationInfoLabel;
     @FXML private Pagination pagination;
 
-    // ─── Data ──────────────────────────────────────────────────────────────────
+
 
     private final ObservableList<Patient> masterList   = FXCollections.observableArrayList();
     private FilteredList<Patient>         filteredList;
     private static final int              PAGE_SIZE    = 20;
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    //  Patient Model
-    // ═══════════════════════════════════════════════════════════════════════════
 
     public static class Patient {
 
@@ -79,10 +76,10 @@ public class ManagePatientsController {
             this.dob.set(dob);
             this.address.set(address);
             this.role.set(role);
-            this.status.set("Active"); // default; update if your DB has a status column
+            this.status.set("Active");
         }
 
-        // Property accessors (required by PropertyValueFactory)
+
         public IntegerProperty idProperty()       { return id; }
         public StringProperty  nameProperty()     { return name; }
         public StringProperty  emailProperty()    { return email; }
@@ -93,7 +90,7 @@ public class ManagePatientsController {
         public StringProperty  roleProperty()     { return role; }
         public StringProperty  statusProperty()   { return status; }
 
-        // Plain getters (used by some factories & action handlers)
+
         public int    getId()       { return id.get(); }
         public String getName()     { return name.get(); }
         public String getEmail()    { return email.get(); }
@@ -104,13 +101,9 @@ public class ManagePatientsController {
         public String getRole()     { return role.get(); }
         public String getStatus()   { return status.get(); }
 
-        // Plain setters
+
         public void setStatus(String s) { status.set(s); }
     }
-
-    // ═══════════════════════════════════════════════════════════════════════════
-    //  Initialization
-    // ═══════════════════════════════════════════════════════════════════════════
 
     @FXML
     public void initialize() {
@@ -120,8 +113,6 @@ public class ManagePatientsController {
         loadPatientsFromDatabase();
         setupPagination();
     }
-
-    // ─── ComboBox setup ────────────────────────────────────────────────────────
 
     private void setupFilterComboBoxes() {
         genderFilter.setItems(FXCollections.observableArrayList("All", "Male", "Female", "Other"));
@@ -134,8 +125,6 @@ public class ManagePatientsController {
         statusFilter.valueProperty().addListener((obs, o, n) -> applyFilters());
     }
 
-    // ─── Column setup ──────────────────────────────────────────────────────────
-
     private void setupTableColumns() {
         colId     .setCellValueFactory(new PropertyValueFactory<>("id"));
         colName   .setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -144,7 +133,6 @@ public class ManagePatientsController {
         colEmail  .setCellValueFactory(new PropertyValueFactory<>("email"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
 
-        // Status column with colored badge
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colStatus.setCellFactory(col -> new TableCell<>() {
             @Override
@@ -169,14 +157,12 @@ public class ManagePatientsController {
             }
         });
 
-        // Actions column
+
         colActions.setCellFactory(buildActionCellFactory());
 
-        // Style header
+
         patientsTable.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
-
-    // ─── Actions cell factory ──────────────────────────────────────────────────
 
     private Callback<TableColumn<Patient, Void>, TableCell<Patient, Void>> buildActionCellFactory() {
         return col -> new TableCell<>() {
@@ -213,8 +199,6 @@ public class ManagePatientsController {
         };
     }
 
-    // ─── Filtering ─────────────────────────────────────────────────────────────
-
     private void setupFiltering() {
         filteredList = new FilteredList<>(masterList, p -> true);
 
@@ -248,8 +232,6 @@ public class ManagePatientsController {
         updatePaginationInfo();
     }
 
-    // ─── Load from DB ──────────────────────────────────────────────────────────
-
     private void loadPatientsFromDatabase() {
         String query = "SELECT id, name, email, gender, birth_date, address, password, role " +
                 "FROM users WHERE role = 'patient'";
@@ -282,8 +264,6 @@ public class ManagePatientsController {
         updatePaginationInfo();
     }
 
-    // ─── Stats bar ─────────────────────────────────────────────────────────────
-
     private void updateStats() {
         long total  = masterList.size();
         long males  = masterList.stream().filter(p -> "Male".equalsIgnoreCase(p.getGender())).count();
@@ -294,12 +274,12 @@ public class ManagePatientsController {
         femaleCountLabel.setText(String.valueOf(females));
     }
 
-    // ─── Pagination ────────────────────────────────────────────────────────────
+
 
     private void setupPagination() {
         pagination.setPageFactory(pageIndex -> {
-            // If you want real pagination, slice the list here.
-            // For now it just reflects the total.
+
+
             return new javafx.scene.layout.StackPane();
         });
         updatePaginationInfo();
@@ -312,8 +292,6 @@ public class ManagePatientsController {
         int pages = Math.max(1, (int) Math.ceil((double) count / PAGE_SIZE));
         pagination.setPageCount(pages);
     }
-
-    // ─── Action Handlers ───────────────────────────────────────────────────────
 
     private void handleView(Patient p) {
         String info =
@@ -335,17 +313,14 @@ public class ManagePatientsController {
             );
             Parent root = loader.load();
 
-            // Pass the selected patient into the modal controller
             EditPatientController editCtrl = loader.getController();
             editCtrl.setPatient(p);
 
-            // Optional: re-run stats/pagination after save (table updates live via properties)
             editCtrl.setOnSaveCallback(() -> {
                 updateStats();
                 updatePaginationInfo();
             });
 
-            // Open as a modal dialog
             Stage modal = new Stage();
             modal.setTitle("Edit Patient — " + p.getName());
             modal.setScene(new Scene(root));
@@ -359,7 +334,6 @@ public class ManagePatientsController {
             showAlert(Alert.AlertType.ERROR, "Error", "Could not open edit form:\n" + e.getMessage());
         }
     }
-
 
     private void handleDelete(Patient p) {
         Optional<ButtonType> result = new Alert(Alert.AlertType.CONFIRMATION,
@@ -382,8 +356,6 @@ public class ManagePatientsController {
         }
     }
 
-    // ─── FXML Button Actions ───────────────────────────────────────────────────
-
     @FXML
     private void refreshPatients() {
         searchField.clear();
@@ -391,8 +363,6 @@ public class ManagePatientsController {
         statusFilter.setValue("All");
         loadPatientsFromDatabase();
     }
-
-    // ─── Utility ───────────────────────────────────────────────────────────────
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
