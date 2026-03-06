@@ -58,7 +58,6 @@ public class AppointmentDAO {
     }
 
 
-    // DAO method
     public static boolean updateAppointmentStatus(String email, LocalDate date, String newStatus) {
         String query = "UPDATE appointments SET status=? WHERE email=? AND appointment_date=?";
         try (Connection conn = DatabaseConnection.getConnection();
