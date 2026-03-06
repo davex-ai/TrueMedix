@@ -1,47 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.*?>
+
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+<?import javafx.scene.shape.Line?>
+<ScrollPane fx:id="scrollPane" fitToWidth="true" xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.project.hospitalmanagementsystem.controller.hospital.AboutUsController">
+    <VBox alignment="TOP_CENTER" spacing="30" styleClass="main-container">
+        <VBox.margin>
+            <Insets top="40.0"/>
+        </VBox.margin>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.project.hospitalmanagementsystem.controller.hospital.AboutUsController" fx:id="aboutPane"
-            stylesheets="@../../css/about.css"
-            style="-fx-background-image: url('/media/back.png');
-                   -fx-background-size: cover;
-                   -fx-background- repeat: no-repeat;
-                   -fx-background-position: center center;">
-    <children>
-        <VBox fx:id="mainContainer" spacing="20" alignment="TOP_CENTER" prefWidth="800" prefHeight="600" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
+        <stylesheets>
+            <URL value="@../../css/about.css"/>
+        </stylesheets>
 
-            <Label text="About Us" styleClass="section-heading"/>
+        <Label text="About Us" styleClass="page-title"/>
 
-            <Label text="At Trumedix, we believe that quality healthcare should be accessible, compassionate, and centered around the individual. Founded with a vision to transform the patient experience, we are more than just a medical facility—we are a community of dedicated professionals driven by purpose. Our approach combines modern medical innovation with a deep commitment to empathy, trust, and holistic care. From general consultations to advanced lab diagnostics, pharmacy support, and tailored treatment plans, we strive to provide every patient with a seamless, respectful, and supportive journey."
-                   wrapText="true" styleClass="paragraph-text"/>
-
-            <Label text="Whether you're visiting us for routine check-ups or urgent care, our team is here to walk with you every step of the way—because at Trumedix, your health is our mission, and your well-being is our promise."
-                   wrapText="true" styleClass="paragraph-text"/>
-
-            <Label text="📞 Contact Us" styleClass="subsection-heading"/>
-
-            <VBox spacing="10" alignment="CENTER">
-                <Label text="We're here to help—anytime you need us. Whether you have questions about our services, need assistance with an appointment, or simply want to learn more about how we can support your health journey, don’t hesitate to reach out."
-                       styleClass="paragraph-text"/>
-                <Label text="Our team is available around the clock to listen, guide, and respond with care."
-                       styleClass="paragraph-text"/>
-                <Label text="Phone: You can call us directly at (+234) 123 456 7890"
-                       styleClass="paragraph-text"/>
-                <Label text="Drop by our main office at 123 Health St, Wellness City. We value every inquiry and promise a prompt, thoughtful response—because at Trumedix, you’re not just a patient; you’re family."
-                       styleClass="paragraph-text"/>
-                <Label text="Email: send us email at support@trumedixcare.com"
-                       styleClass="paragraph-text"/>
-            </VBox>
-
-            <Separator styleClass="separator"/>
-
-            <HBox spacing="20" alignment="CENTER">
-                <Label text="HQ Address" styleClass="footer-text"/>
-                <Pane HBox.hgrow="ALWAYS"/>
-            </HBox>
-
-            <Hyperlink fx:id="wantToKnowMoreLink" text="Go back" onAction="#goBackToWelcome" styleClass="hyperlink"/>
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="🛤 Our Story" styleClass="section-heading"/>
+            <Label text="At Trumedix, we began with a mission to make quality healthcare accessible and compassionate. Our journey combines innovation, empathy, and trust to deliver a seamless patient experience."
+                   wrapText="true" styleClass="section-text"/>
         </VBox>
-    </children>
-</AnchorPane>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Mission -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="🎯 Mission" styleClass="section-heading"/>
+            <Label text="Our mission is to provide outstanding medical services to all patients, combining modern technology with personalized care."
+                   wrapText="true" styleClass="section-text"/>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Achievements -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="🏆 Achievements" styleClass="section-heading"/>
+            <FlowPane hgap="20" vgap="20" alignment="CENTER">
+                <Button text="Opened 10 Clinics" styleClass="milestone-button"/>
+                <Button text="Served 50K Patients" styleClass="milestone-button"/>
+                <Button text="Top Healthcare Award 2025" styleClass="milestone-button"/>
+            </FlowPane>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Founders Section -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="👥 Founders" styleClass="section-heading"/>
+            <FlowPane hgap="20" vgap="20" alignment="CENTER">
+                <VBox spacing="5" alignment="CENTER">
+                    <ImageView fitWidth="80" fitHeight="80" preserveRatio="true">
+                        <image>
+                            <Image url="https://via.placeholder.com/80" />
+                        </image>
+                    </ImageView>
+                    <Label text="Dr. Mycah James" styleClass="section-text"/>
+                    <Label text="CEO &amp; Founder" styleClass="subsection-text"/>
+                </VBox>
+                <VBox spacing="5" alignment="CENTER">
+                    <ImageView fitWidth="80" fitHeight="80" preserveRatio="true">
+                        <image>
+                            <Image url="https://via.placeholder.com/80" />
+                        </image>
+                    </ImageView>
+                    <Label text="Dr. Ayra Stark" styleClass="section-text"/>
+                    <Label text="CTO &amp; Co-Founder" styleClass="subsection-text"/>
+                </VBox>
+                <VBox spacing="5" alignment="CENTER">
+                    <ImageView fitWidth="80" fitHeight="80" preserveRatio="true">
+                        <image>
+                            <Image url="https://via.placeholder.com/80" />
+                        </image>
+                    </ImageView>
+                    <Label text="Dr. Braun BlackWaters" styleClass="section-text"/>
+                    <Label text="COO &amp; Co-Founder" styleClass="subsection-text"/>
+                </VBox>
+            </FlowPane>
+        </VBox>
+
+        <Line startX="0" endX="600" styleClass="section-line"/>
+
+        <!-- Contact Section -->
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="📞 Contact Us" styleClass="section-heading"/>
+            <Label text="We're here to help anytime. Call, email, or visit our main office—our team is ready to guide you with care." wrapText="true" styleClass="section-text"/>
+            <Label text="Phone: (+234) 123 456 7890" styleClass="section-text"/>
+            <Label text="Email: support@trumedixcare.com" styleClass="section-text"/>
+            <Label text="Address: 123 Health St, Wellness City" styleClass="section-text"/>
+        </VBox>
+
+        <!-- Footer -->
+        <HBox spacing="20" alignment="CENTER" styleClass="footer">
+            <Label text="© 2026 Trumedix" styleClass="footer-text"/>
+            <Hyperlink fx:id="wantToKnowMoreLink" text="Go back" onAction="#goBackToWelcome"/>
+        </HBox>
+    </VBox>
+</ScrollPane>
