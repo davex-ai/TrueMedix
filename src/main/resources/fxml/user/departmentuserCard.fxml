@@ -46,7 +46,7 @@
                           styleClass="tile-pane"/>
 
             <HBox spacing="10" alignment="BOTTOM_CENTER">
-                <Button text="← Back" onMouseClicked="#handleBack" styleClass="nav-button"/>
+                <Button text="← Back" onAction="#handleBack" styleClass="nav-button"/>
             </HBox>
     </VBox>
     </AnchorPane>
