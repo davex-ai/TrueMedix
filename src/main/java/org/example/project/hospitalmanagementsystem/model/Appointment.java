@@ -48,4 +48,6 @@ public class Appointment {
     public IntegerProperty appointmentIdProperty() { return appointmentId; }
     public StringProperty statusProperty() { return status; }
     public StringProperty notesProperty() { return notes; }
+
+    public StringProperty getNotes() {return notes; }
 }
