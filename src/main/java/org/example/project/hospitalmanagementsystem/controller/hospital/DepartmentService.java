@@ -57,10 +57,6 @@ public class DepartmentService {
         return list;
     }
 
-    /**
-     * Returns a map of department name → count of appointments booked
-     * to any doctor in that department.
-     */
     public Map<String, Integer> getAppointmentCountByDepartment() {
         Map<String, Integer> map = new HashMap<>();
         String sql = "SELECT d.department, COUNT(a.appointment_id) AS appt_count " +
@@ -79,10 +75,6 @@ public class DepartmentService {
         return map;
     }
 
-    /**
-     * Returns a map of department name → number of doctors actually assigned
-     * (counted from the doctor table, not the stored string in department_stats).
-     */
     public Map<String, Integer> getDoctorCountByDepartment() {
         Map<String, Integer> map = new HashMap<>();
         String sql = "SELECT department, COUNT(doctor_id) AS doc_count FROM doctor GROUP BY department";

@@ -33,8 +33,6 @@ public class DepartmentView {
     @FXML
     private Label descriptionLabel;
 
-//    @FXML
-//    private Label visitsLabel;
     private Department department;
 
     @FXML private ListView<String> servicesListView;
