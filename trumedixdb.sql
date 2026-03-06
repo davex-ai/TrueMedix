@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2025 at 03:25 AM
+-- Generation Time: Mar 06, 2026 at 05:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,10 @@ CREATE TABLE `appointments` (
 
 INSERT INTO `appointments` (`appointment_id`, `user_id`, `doctor_id`, `status`, `notes`, `created_at`, `name`, `email`, `department`, `doctor`, `appointment_date`, `appointment_time`, `admin_message`) VALUES
 (1, 9, 6, 'Pending', 'My son is having breathing issues temporarily', '2025-06-03 08:44:01', 'martha', 'martha12@gmail.com', 'Cardiology', 'Dr. Smith', '2025-06-18', '10:00 AM', NULL),
-(2, 2, 7, 'Approved', '5 year old head ache', '2025-06-09 23:10:15', 'MIKE', 'mike@gmail.com', 'Pediatrics', 'Dr. Viola Davis', '2025-06-12', '10:00 AM', 'Your lab test is ready');
+(2, 2, 7, 'Approved', '5 year old head ache', '2025-06-09 23:10:15', 'MIKE', 'mike@gmail.com', 'Pediatrics', 'Dr. Viola Davis', '2025-06-12', '10:00 AM', 'Your lab test is ready'),
+(3, 11, 11, 'Pending', 'dddd', '2026-03-04 17:07:35', 'wawe', 'wawe@gmail.com', 'Neurology', 'Dr. Lena Kwarteng', '2026-03-23', '11:00 AM', NULL),
+(4, 11, 19, 'Pending', 'heyyy', '2026-03-04 23:08:52', 'wawe', 'wawe@gmail.com', 'Dermatology', 'Dr. Marcus Foley', '2026-03-19', '11:00 AM', NULL),
+(5, 10, 18, 'Pending', 'nth fr', '2026-03-06 03:48:49', 'Elaine', 'Elaine@yahoo.com', 'Dermatology', 'Dr. Rose', '2026-03-13', '11:00 AM', NULL);
 
 -- --------------------------------------------------------
 
@@ -81,7 +84,10 @@ INSERT INTO `complaints` (`complaint_id`, `Name`, `category`, `urgency`, `phone`
 (1, 'mark', 'Billing Issue', 'Low', '09079085438', 'I was wondering if there was any way.my bill could be re-evaluated. Thank you', NULL, 'Pending', '2025-05-30 06:45:48', NULL, NULL, NULL, NULL),
 (2, 'user', 'Appointments', 'Low', '09045678946', 'I booked an appointment and i  havent been given any feedback whatsoever', NULL, 'Pending', '2025-05-30 07:09:51', 'We will do something about it and get back to you sir', '2025-05-31 09:47:22', NULL, NULL),
 (6, 'martha', 'Appointments', 'Low', '07037541895', 'my appointment has been delayed. May i know the reason behind this?', NULL, 'Pending', '2025-06-03 08:45:22', NULL, NULL, NULL, NULL),
-(7, 'mary', 'Appointments', 'Medium', '09065867319', 'i cant seem to book an appointment', 'C:\\Users\\DELL\\Downloads\\doctors\\femaledoc7.jpg', 'Pending', '2025-06-09 23:05:02', NULL, NULL, NULL, NULL);
+(7, 'mary', 'Appointments', 'Medium', '09065867319', 'i cant seem to book an appointment', 'C:\\Users\\DELL\\Downloads\\doctors\\femaledoc7.jpg', 'Resolved', '2025-06-09 23:05:02', 'We are sorry for the inconvinience and will get back to u shortly ', '2025-09-08 12:46:04', NULL, NULL),
+(8, 'wawe', 'Health Issues', 'Medium', '09075456765456', 'dd', NULL, 'Pending', '2026-03-04 17:07:00', NULL, NULL, NULL, NULL),
+(9, 'wawe', 'Appointments', 'Low', '6789', 'heyyy', NULL, 'Resolved', '2026-03-04 23:08:18', 'ok', '2026-03-06 01:09:16', NULL, NULL),
+(10, 'wawe', 'Health Issues', 'Medium', '3456765432', 'wow', NULL, 'Pending', '2026-03-06 03:47:47', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -181,7 +187,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `birth_date`, `role`, `g
 (7, 'male', 'male@gmail.com', '12345', '2025-05-28', 'Patient', 'Male', '1234 sad', 0, '2025-05-28 01:37:21'),
 (8, 'mark', 'mark@gmail.com', 'mark1', '2025-05-30', 'Patient', 'Male', 'West mine', 0, '2025-05-30 05:59:32'),
 (9, 'Martha', 'martha12@gmail.com', '1234', '2025-05-31', 'Patient', 'Female', 'On Golden Resist Mare Street', 0, '2025-05-31 16:24:47'),
-(10, 'Elaine', 'Elaine@yahoo.com', '1234', '2025-05-31', 'Patient', 'Female', 'Mislot Ferdinand Way', 0, '2025-05-31 16:26:06');
+(10, 'Elaine', 'Elaine@yahoo.com', '1234', '2025-05-31', 'Patient', 'Female', 'Mislot Ferdinand Way', 0, '2025-05-31 16:26:06'),
+(11, 'sase', 'wawe@gmail.com', 'wawe', '2026-03-12', 'Patient', 'Female', '23 hj 34rf', 0, '2026-03-04 17:02:52');
 
 --
 -- Indexes for dumped tables
@@ -230,13 +237,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `complaint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `complaint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `department_stats`
@@ -254,7 +261,7 @@ ALTER TABLE `doctor`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
